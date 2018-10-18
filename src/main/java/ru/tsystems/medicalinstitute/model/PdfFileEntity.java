@@ -15,8 +15,8 @@ public class PdfFileEntity {
     @Column(name = "data", nullable = false)
     private byte[] data;
     @ManyToOne
-    @JoinColumn(name = "id_patient", nullable = false)
-    private PatientEntity patient;
+    @JoinColumn(name = "id_case", nullable = false)
+    private MedicalCaseEntity medicalCase;
 
     public int getId() {
         return id;
@@ -39,11 +39,11 @@ public class PdfFileEntity {
         this.data = data;
     }
 
-    public PatientEntity getPatient() {
-        return patient;
+    public MedicalCaseEntity getMedicalCase() {
+        return medicalCase;
     }
-    public void setPatient(PatientEntity patient) {
-        this.patient = patient;
+    public void setMedicalCase(MedicalCaseEntity medicalCase) {
+        this.medicalCase = medicalCase;
     }
 
     @Override

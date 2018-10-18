@@ -1,5 +1,7 @@
 package ru.tsystems.medicalinstitute.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
@@ -16,6 +18,7 @@ public class PatientEntity {
     @Column(name = "surname", length = 20)
     private String surname;
     @Column(name = "birthday")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private Date birthday;
     @Column(name = "passport_details", length = 200)
@@ -31,9 +34,16 @@ public class PatientEntity {
     @Column(name = "social_security_number", nullable = false, length = 11)
     private int socialSecurityNumber;
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<PdfFileEntity> pdfFiles;
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MedicalCaseEntity> medicalCases;
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<VisitEntity> visits;
+
+    public Set<VisitEntity> getVisits() {
+        return visits;
+    }
+    public void setVisits(Set<VisitEntity> visits) {
+        this.visits = visits;
+    }
 
     public int getId() {
         return id;
@@ -103,13 +113,6 @@ public class PatientEntity {
     }
     public void setSocialSecurityNumber(int socialSecurityNumber) {
         this.socialSecurityNumber = socialSecurityNumber;
-    }
-
-    public Set<PdfFileEntity> getPdfFiles() {
-        return pdfFiles;
-    }
-    public void setPdfFiles(Set<PdfFileEntity> pdfFiles) {
-        this.pdfFiles = pdfFiles;
     }
 
     public Set<MedicalCaseEntity> getMedicalCases() {

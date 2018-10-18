@@ -26,6 +26,15 @@ public class MedicalStaffEntity {
     private Set<DiagnosisEntity> diagnoses;
     @OneToMany(mappedBy = "medicalStaff", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MedicalCaseEntity> medicalCases;
+    @OneToMany(mappedBy = "medicalStaff", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<VisitEntity> visits;
+
+    public Set<VisitEntity> getVisits() {
+        return visits;
+    }
+    public void setVisits(Set<VisitEntity> visits) {
+        this.visits = visits;
+    }
 
     public int getId() {
         return id;

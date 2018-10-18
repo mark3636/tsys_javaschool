@@ -30,6 +30,17 @@ public class MedicalCaseEntity {
     private MedicalStaffEntity medicalStaff;
     @OneToMany(mappedBy = "medicalCase", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<DiagnosisEntity> diagnoses;
+    @OneToMany(mappedBy = "medicalCase", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<PdfFileEntity> pdfFiles;
+    @OneToMany(mappedBy = "medicalCase", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<VisitEntity> visits;
+
+    public Set<VisitEntity> getVisits() {
+        return visits;
+    }
+    public void setVisits(Set<VisitEntity> visits) {
+        this.visits = visits;
+    }
 
     public int getId() {
         return id;
@@ -85,6 +96,13 @@ public class MedicalCaseEntity {
     }
     public void setDiagnoses(Set<DiagnosisEntity> diagnoses) {
         this.diagnoses = diagnoses;
+    }
+
+    public Set<PdfFileEntity> getPdfFiles() {
+        return pdfFiles;
+    }
+    public void setPdfFiles(Set<PdfFileEntity> pdfFiles) {
+        this.pdfFiles = pdfFiles;
     }
 
     @Override
