@@ -21,12 +21,12 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     @Transactional
-    public void addPatient(Patient patient) {
+    public void add(Patient patient) {
         patientDAO.add(patientMapper.fromBo(patient));
     }
 
     @Override
-    public void updatePatient(Patient patient) {
+    public void update(Patient patient) {
         patientDAO.update(patientMapper.fromBo(patient));
     }
 
@@ -36,12 +36,12 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public Patient getPatientById(int id) {
+    public Patient getById(int id) {
         return patientMapper.toBo(patientDAO.getById(id));
     }
 
     @Override
-    public void removePatient(int id) {
+    public void remove(int id) {
         patientDAO.remove(id);
     }
 }
