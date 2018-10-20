@@ -1,10 +1,7 @@
 package ru.tsystems.medicalinstitute.bo;
 
-import ru.tsystems.medicalinstitute.model.DiagnosisEntity;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 public class MedicalCase {
     private int id;
@@ -14,16 +11,11 @@ public class MedicalCase {
     private CaseStatus caseStatus;
     private Patient patient;
     private MedicalStaff medicalStaff;
-//    private Set<Diagnosis> diagnoses;
-//    private Set<PdfFile> pdfFiles;
-//    private Set<Visit> visits;
 
     public MedicalCase() {
-//        diagnoses = new HashSet<>();
-//        pdfFiles = new HashSet<>();
     }
 
-    public MedicalCase(int id, String number, Date beginningDate, Date endingDate, CaseStatus caseStatus, Patient patient, MedicalStaff medicalStaff/*, Set<Diagnosis> diagnoses, Set<PdfFile> pdfFiles, Set<Visit> visits*/) {
+    public MedicalCase(int id, String number, Date beginningDate, Date endingDate, CaseStatus caseStatus, Patient patient, MedicalStaff medicalStaff) {
         this.id = id;
         this.number = number;
         this.beginningDate = beginningDate;
@@ -31,15 +23,11 @@ public class MedicalCase {
         this.caseStatus = caseStatus;
         this.patient = patient;
         this.medicalStaff = medicalStaff;
-//        this.diagnoses = diagnoses;
-//        this.pdfFiles = pdfFiles;
-//        this.visits = visits;
     }
 
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -47,7 +35,6 @@ public class MedicalCase {
     public String getNumber() {
         return number;
     }
-
     public void setNumber(String number) {
         this.number = number;
     }
@@ -55,7 +42,6 @@ public class MedicalCase {
     public Date getBeginningDate() {
         return beginningDate;
     }
-
     public void setBeginningDate(Date beginningDate) {
         this.beginningDate = beginningDate;
     }
@@ -63,7 +49,6 @@ public class MedicalCase {
     public Date getEndingDate() {
         return endingDate;
     }
-
     public void setEndingDate(Date endingDate) {
         this.endingDate = endingDate;
     }
@@ -71,7 +56,6 @@ public class MedicalCase {
     public CaseStatus getCaseStatus() {
         return caseStatus;
     }
-
     public void setCaseStatus(CaseStatus caseStatus) {
         this.caseStatus = caseStatus;
     }
@@ -79,7 +63,6 @@ public class MedicalCase {
     public Patient getPatient() {
         return patient;
     }
-
     public void setPatient(Patient patient) {
         this.patient = patient;
     }
@@ -87,34 +70,10 @@ public class MedicalCase {
     public MedicalStaff getMedicalStaff() {
         return medicalStaff;
     }
-
     public void setMedicalStaff(MedicalStaff medicalStaff) {
         this.medicalStaff = medicalStaff;
     }
 
-//    public Set<Diagnosis> getDiagnoses() {
-//        return diagnoses;
-//    }
-//
-//    public void setDiagnoses(Set<Diagnosis> diagnoses) {
-//        this.diagnoses = diagnoses;
-//    }
-//
-//    public Set<PdfFile> getPdfFiles() {
-//        return pdfFiles;
-//    }
-//
-//    public void setPdfFiles(Set<PdfFile> pdfFiles) {
-//        this.pdfFiles = pdfFiles;
-//    }
-//
-//    public Set<Visit> getVisits() {
-//        return visits;
-//    }
-//
-//    public void setVisits(Set<Visit> visits) {
-//        this.visits = visits;
-//    }
 
     @Override
     public boolean equals(Object o) {

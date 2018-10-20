@@ -25,7 +25,6 @@ public class Diagnosis {
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -33,7 +32,6 @@ public class Diagnosis {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -41,7 +39,6 @@ public class Diagnosis {
     public Date getDiagnosisDate() {
         return diagnosisDate;
     }
-
     public void setDiagnosisDate(Date diagnosisDate) {
         this.diagnosisDate = diagnosisDate;
     }
@@ -49,7 +46,6 @@ public class Diagnosis {
     public String getComment() {
         return comment;
     }
-
     public void setComment(String comment) {
         this.comment = comment;
     }
@@ -57,7 +53,6 @@ public class Diagnosis {
     public MedicalStaff getMedicalStaff() {
         return medicalStaff;
     }
-
     public void setMedicalStaff(MedicalStaff medicalStaff) {
         this.medicalStaff = medicalStaff;
     }
@@ -65,7 +60,6 @@ public class Diagnosis {
     public MedicalCase getMedicalCase() {
         return medicalCase;
     }
-
     public void setMedicalCase(MedicalCase medicalCase) {
         this.medicalCase = medicalCase;
     }

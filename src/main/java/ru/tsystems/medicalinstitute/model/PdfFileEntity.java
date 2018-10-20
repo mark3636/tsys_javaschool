@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Arrays;
 
 @Entity
-@Table(name = "pdf_file", schema = "medical_institute")//, catalog = "")
+@Table(name = "pdf_file")
 public class PdfFileEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

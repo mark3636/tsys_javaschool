@@ -28,12 +28,6 @@ public class MedicalCaseEntity {
     @ManyToOne
     @JoinColumn(name = "id_medical_staff", nullable = false)
     private MedicalStaffEntity medicalStaff;
-//    @OneToMany(mappedBy = "medicalCase", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<DiagnosisEntity> diagnoses;
-//    @OneToMany(mappedBy = "medicalCase", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<PdfFileEntity> pdfFiles;
-//    @OneToMany(mappedBy = "medicalCase", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<VisitEntity> visits;
 
     public int getId() {
         return id;
@@ -84,26 +78,6 @@ public class MedicalCaseEntity {
         this.medicalStaff = medicalStaff;
     }
 
-//    public Set<DiagnosisEntity> getDiagnoses() {
-//        return diagnoses;
-//    }
-//    public void setDiagnoses(Set<DiagnosisEntity> diagnoses) {
-//        this.diagnoses = diagnoses;
-//    }
-//
-//    public Set<PdfFileEntity> getPdfFiles() {
-//        return pdfFiles;
-//    }
-//    public void setPdfFiles(Set<PdfFileEntity> pdfFiles) {
-//        this.pdfFiles = pdfFiles;
-//    }
-//
-//    public Set<VisitEntity> getVisits() {
-//        return visits;
-//    }
-//    public void setVisits(Set<VisitEntity> visits) {
-//        this.visits = visits;
-//    }
 
     @Override
     public boolean equals(Object o) {

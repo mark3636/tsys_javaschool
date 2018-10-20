@@ -22,12 +22,6 @@ public class MedicalStaffEntity {
     private String password;
     @Column(name = "email", nullable = false, length = 30)
     private String email;
-//    @OneToMany(mappedBy = "medicalStaff", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<DiagnosisEntity> diagnoses;
-//    @OneToMany(mappedBy = "medicalStaff", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<MedicalCaseEntity> medicalCases;
-//    @OneToMany(mappedBy = "medicalStaff", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<VisitEntity> visits;
 
     public int getId() {
         return id;
@@ -70,27 +64,6 @@ public class MedicalStaffEntity {
     public void setEmail(String email) {
         this.email = email;
     }
-
-//    public Set<DiagnosisEntity> getDiagnoses() {
-//        return diagnoses;
-//    }
-//    public void setDiagnoses(Set<DiagnosisEntity> diagnoses) {
-//        this.diagnoses = diagnoses;
-//    }
-//
-//    public Set<MedicalCaseEntity> getMedicalCases() {
-//        return medicalCases;
-//    }
-//    public void setMedicalCases(Set<MedicalCaseEntity> medicalCases) {
-//        this.medicalCases = medicalCases;
-//    }
-//
-//    public Set<VisitEntity> getVisits() {
-//        return visits;
-//    }
-//    public void setVisits(Set<VisitEntity> visits) {
-//        this.visits = visits;
-//    }
 
     @Override
     public boolean equals(Object o) {

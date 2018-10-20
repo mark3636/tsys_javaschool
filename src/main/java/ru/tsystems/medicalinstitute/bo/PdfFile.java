@@ -21,7 +21,6 @@ public class PdfFile {
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -29,7 +28,6 @@ public class PdfFile {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -37,7 +35,6 @@ public class PdfFile {
     public byte[] getData() {
         return data;
     }
-
     public void setData(byte[] data) {
         this.data = data;
     }
@@ -45,7 +42,6 @@ public class PdfFile {
     public MedicalCase getMedicalCase() {
         return medicalCase;
     }
-
     public void setMedicalCase(MedicalCase medicalCase) {
         this.medicalCase = medicalCase;
     }

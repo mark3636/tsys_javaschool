@@ -26,7 +26,6 @@ public class Visit {
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -34,7 +33,6 @@ public class Visit {
     public Date getBeginningDate() {
         return beginningDate;
     }
-
     public void setBeginningDate(Date beginningDate) {
         this.beginningDate = beginningDate;
     }
@@ -42,7 +40,6 @@ public class Visit {
     public Date getEndingDate() {
         return endingDate;
     }
-
     public void setEndingDate(Date endingDate) {
         this.endingDate = endingDate;
     }
@@ -50,7 +47,6 @@ public class Visit {
     public MedicalCase getMedicalCase() {
         return medicalCase;
     }
-
     public void setMedicalCase(MedicalCase medicalCase) {
         this.medicalCase = medicalCase;
     }
@@ -58,7 +54,6 @@ public class Visit {
     public MedicalStaff getMedicalStaff() {
         return medicalStaff;
     }
-
     public void setMedicalStaff(MedicalStaff medicalStaff) {
         this.medicalStaff = medicalStaff;
     }
@@ -66,7 +61,6 @@ public class Visit {
     public Patient getPatient() {
         return patient;
     }
-
     public void setPatient(Patient patient) {
         this.patient = patient;
     }
