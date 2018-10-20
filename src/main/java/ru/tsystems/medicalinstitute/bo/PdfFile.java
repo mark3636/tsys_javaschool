@@ -1,9 +1,12 @@
 package ru.tsystems.medicalinstitute.bo;
 
+import java.util.Arrays;
+
 public class PdfFile {
     private int id;
     private String name;
     private byte[] data;
+    private MedicalCase medicalCase;
 
     public PdfFile() {
     }
@@ -47,5 +50,25 @@ public class PdfFile {
         this.medicalCase = medicalCase;
     }
 
-    private MedicalCase medicalCase;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PdfFile that = (PdfFile) o;
+
+        if (id != that.id) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (!Arrays.equals(data, that.data)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + Arrays.hashCode(data);
+        return result;
+    }
 }

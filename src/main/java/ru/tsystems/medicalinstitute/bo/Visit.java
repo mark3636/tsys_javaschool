@@ -1,6 +1,7 @@
 package ru.tsystems.medicalinstitute.bo;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Visit {
     private int id;
@@ -8,6 +9,7 @@ public class Visit {
     private Date endingDate;
     private MedicalCase medicalCase;
     private MedicalStaff medicalStaff;
+    private Patient patient;
 
     public Visit() {
     }
@@ -69,5 +71,19 @@ public class Visit {
         this.patient = patient;
     }
 
-    private Patient patient;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Visit that = (Visit) o;
+        return id == that.id &&
+                Objects.equals(beginningDate, that.beginningDate) &&
+                Objects.equals(endingDate, that.endingDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, beginningDate, endingDate);
+    }
 }

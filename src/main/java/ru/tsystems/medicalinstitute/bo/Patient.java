@@ -1,5 +1,7 @@
 package ru.tsystems.medicalinstitute.bo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,6 +10,7 @@ public class Patient {
     private int id;
     private String name;
     private String surname;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
     private String passportDetails;
     private String address;
@@ -15,23 +18,15 @@ public class Patient {
     private String phoneNumber;
     private String comment;
     private int socialSecurityNumber;
-    private Set<MedicalCase> medicalCases;
-    private Set<Visit> visits;
-
-    public Set<Visit> getVisits() {
-        return visits;
-    }
-
-    public void setVisits(Set<Visit> visits) {
-        this.visits = visits;
-    }
+//    private Set<MedicalCase> medicalCases;
+//    private Set<Visit> visits;
 
     public Patient() {
-        medicalCases = new HashSet<MedicalCase>();
-        visits = new HashSet<Visit>();
+//        medicalCases = new HashSet<MedicalCase>();
+//        visits = new HashSet<Visit>();
     }
 
-    public Patient(int id, String name, String surname, Date birthday, String passportDetails, String address, String email, String phoneNumber, String comment, int socialSecurityNumber, Set<MedicalCase> medicalCases, Set<Visit> visits) {
+    public Patient(int id, String name, String surname, Date birthday, String passportDetails, String address, String email, String phoneNumber, String comment, int socialSecurityNumber/*, Set<MedicalCase> medicalCases, Set<Visit> visits*/) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -42,8 +37,8 @@ public class Patient {
         this.phoneNumber = phoneNumber;
         this.comment = comment;
         this.socialSecurityNumber = socialSecurityNumber;
-        this.medicalCases = medicalCases;
-        this.visits = visits;
+//        this.medicalCases = medicalCases;
+//        this.visits = visits;
     }
 
     public int getId() {
@@ -126,12 +121,57 @@ public class Patient {
         this.socialSecurityNumber = socialSecurityNumber;
     }
 
-    public Set<MedicalCase> getMedicalCases() {
-        return medicalCases;
+//    public Set<MedicalCase> getMedicalCases() {
+//        return medicalCases;
+//    }
+//
+//    public void setMedicalCases(Set<MedicalCase> medicalCases) {
+//        this.medicalCases = medicalCases;
+//    }
+//
+//    public Set<Visit> getVisits() {
+//        return visits;
+//    }
+//
+//    public void setVisits(Set<Visit> visits) {
+//        this.visits = visits;
+//    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Patient that = (Patient) o;
+
+        if (id != that.id) return false;
+        if (socialSecurityNumber != that.socialSecurityNumber) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (surname != null ? !surname.equals(that.surname) : that.surname != null) return false;
+        if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;
+        if (passportDetails != null ? !passportDetails.equals(that.passportDetails) : that.passportDetails != null)
+            return false;
+        if (address != null ? !address.equals(that.address) : that.address != null) return false;
+        if (email != null ? !email.equals(that.email) : that.email != null) return false;
+        if (phoneNumber != null ? !phoneNumber.equals(that.phoneNumber) : that.phoneNumber != null) return false;
+        if (comment != null ? !comment.equals(that.comment) : that.comment != null) return false;
+
+        return true;
     }
 
-    public void setMedicalCases(Set<MedicalCase> medicalCases) {
-        this.medicalCases = medicalCases;
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (surname != null ? surname.hashCode() : 0);
+        result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
+        result = 31 * result + (passportDetails != null ? passportDetails.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
+        result = 31 * result + (comment != null ? comment.hashCode() : 0);
+        result = 31 * result + socialSecurityNumber;
+        return result;
     }
 
 }

@@ -8,6 +8,7 @@ public class Diagnosis {
     private Date diagnosisDate;
     private String comment;
     private MedicalStaff medicalStaff;
+    private MedicalCase medicalCase;
 
     public Diagnosis() {
     }
@@ -69,5 +70,28 @@ public class Diagnosis {
         this.medicalCase = medicalCase;
     }
 
-    private MedicalCase medicalCase;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Diagnosis that = (Diagnosis) o;
+
+        if (id != that.id) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (diagnosisDate != null ? !diagnosisDate.equals(that.diagnosisDate) : that.diagnosisDate != null)
+            return false;
+        if (comment != null ? !comment.equals(that.comment) : that.comment != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (diagnosisDate != null ? diagnosisDate.hashCode() : 0);
+        result = 31 * result + (comment != null ? comment.hashCode() : 0);
+        return result;
+    }
 }
