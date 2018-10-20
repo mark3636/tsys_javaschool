@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface MedicalCaseDAO extends AbstractDAO<MedicalCaseEntity> {
     List<MedicalCaseEntity> listMedicalCases();
+    List<MedicalCaseEntity> getByPatientId(int patientId);
 }

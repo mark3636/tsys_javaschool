@@ -6,7 +6,7 @@ import ru.tsystems.medicalinstitute.model.VisitEntity;
 
 import java.util.List;
 
-@Mapper(uses = {MedicalCaseMapper.class, MedicalStaffMapper.class, PatientMapper.class})
+@Mapper(uses = {MedicalStaffMapper.class, MedicalCaseMapper.class, PatientMapper.class})
 public interface VisitMapper {
     Visit toBo(VisitEntity visitEntity);
     VisitEntity fromBo(Visit visit);

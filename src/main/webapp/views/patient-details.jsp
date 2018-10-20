@@ -20,12 +20,12 @@
     <c:if test="${not empty patient.comment}">
         <div>Comment: ${patient.comment}</div>
     </c:if>
-    <c:if test="${empty patient.medicalCases}">
+    <c:if test="${empty medicalCases}">
         <div>No medical cases</div>
     </c:if>
-    <c:if test="${not empty patient.medicalCases}">
+    <c:if test="${not empty medicalCases}">
         <div>Medical cases: </div>
-        <c:forEach items="${patient.medicalCases}" var="medicalCase">
+        <c:forEach items="${medicalCases}" var="medicalCase">
             <div>
                 <div>Case number: ${medicalCase.number}</div>
                 <div>Beginning date: ${medicalCase.beginningDate}</div>
@@ -38,6 +38,7 @@
         </c:forEach>
     </c:if>
     <div>
+        <a href="/patients">Back</a>
     </div>
 </body>
 </html>
