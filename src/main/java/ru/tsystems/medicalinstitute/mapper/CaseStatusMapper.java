@@ -5,7 +5,7 @@ import ru.tsystems.medicalinstitute.model.CaseStatusEntity;
 
 public class CaseStatusMapper {
     public static CaseStatus toBo(CaseStatusEntity caseStatusEntity) {
-        return new CaseStatus(caseStatusEntity.getId(), caseStatusEntity.getName(), caseStatusEntity.getDescription(), MedicalCaseMapper.toBo(caseStatusEntity.getMedicalCases()));
+        return new CaseStatus(caseStatusEntity.getId(), caseStatusEntity.getName(), caseStatusEntity.getDescription()/*, MedicalCaseMapper.toBo(caseStatusEntity.getMedicalCases())*/);
     }
 
     public static CaseStatusEntity toEntity(CaseStatus caseStatus) {

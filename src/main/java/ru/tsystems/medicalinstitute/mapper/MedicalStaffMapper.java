@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class MedicalStaffMapper {
     public static MedicalStaff toBo(MedicalStaffEntity medicalStaffEntity) {
-        return new MedicalStaff(medicalStaffEntity.getId(), medicalStaffEntity.getName(), medicalStaffEntity.getSurname(), medicalStaffEntity.getBirthday(), medicalStaffEntity.getPassword(), medicalStaffEntity.getEmail(), DiagnosisMapper.toBo(medicalStaffEntity.getDiagnoses()), MedicalCaseMapper.toBo(medicalStaffEntity.getMedicalCases()), VisitMapper.toBo(medicalStaffEntity.getVisits()));
+        return new MedicalStaff(medicalStaffEntity.getId(), medicalStaffEntity.getName(), medicalStaffEntity.getSurname(), medicalStaffEntity.getBirthday(), medicalStaffEntity.getPassword(), medicalStaffEntity.getEmail() /*, DiagnosisMapper.toBo(medicalStaffEntity.getDiagnoses()), MedicalCaseMapper.toBo(medicalStaffEntity.getMedicalCases()), VisitMapper.toBo(medicalStaffEntity.getVisits())*/);
     }
 
     public static Set<MedicalStaff> toBo(Set<MedicalStaffEntity> medicalCaseEntitySet) {
