@@ -4,7 +4,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "patient")
@@ -33,17 +32,10 @@ public class PatientEntity {
     private String comment;
     @Column(name = "social_security_number", nullable = false, length = 11)
     private int socialSecurityNumber;
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<MedicalCaseEntity> medicalCases;
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<VisitEntity> visits;
-
-    public Set<VisitEntity> getVisits() {
-        return visits;
-    }
-    public void setVisits(Set<VisitEntity> visits) {
-        this.visits = visits;
-    }
+//    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Set<MedicalCaseEntity> medicalCases;
+//    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Set<VisitEntity> visits;
 
     public int getId() {
         return id;
@@ -115,12 +107,19 @@ public class PatientEntity {
         this.socialSecurityNumber = socialSecurityNumber;
     }
 
-    public Set<MedicalCaseEntity> getMedicalCases() {
-        return medicalCases;
-    }
-    public void setMedicalCases(Set<MedicalCaseEntity> medicalCases) {
-        this.medicalCases = medicalCases;
-    }
+//    public Set<MedicalCaseEntity> getMedicalCases() {
+//        return medicalCases;
+//    }
+//    public void setMedicalCases(Set<MedicalCaseEntity> medicalCases) {
+//        this.medicalCases = medicalCases;
+//    }
+//
+//    public Set<VisitEntity> getVisits() {
+//        return visits;
+//    }
+//    public void setVisits(Set<VisitEntity> visits) {
+//        this.visits = visits;
+//    }
 
     @Override
     public boolean equals(Object o) {

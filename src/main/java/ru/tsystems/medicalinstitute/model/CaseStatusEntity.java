@@ -14,8 +14,8 @@ public class CaseStatusEntity {
     private String name;
     @Column(name = "description", length = 200)
     private String description;
-    @OneToMany(mappedBy = "caseStatus", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<MedicalCaseEntity> medicalCases;
+//    @OneToMany(mappedBy = "caseStatus", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Set<MedicalCaseEntity> medicalCases;
 
     public int getId() {
         return id;
@@ -38,12 +38,12 @@ public class CaseStatusEntity {
         this.description = description;
     }
 
-    public Set<MedicalCaseEntity> getMedicalCases() {
-        return medicalCases;
-    }
-    public void setMedicalCases(Set<MedicalCaseEntity> medicalCases) {
-        this.medicalCases = medicalCases;
-    }
+//    public Set<MedicalCaseEntity> getMedicalCases() {
+//        return medicalCases;
+//    }
+//    public void setMedicalCases(Set<MedicalCaseEntity> medicalCases) {
+//        this.medicalCases = medicalCases;
+//    }
 
     @Override
     public boolean equals(Object o) {
