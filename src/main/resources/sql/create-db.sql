@@ -72,8 +72,7 @@ CREATE TABLE Visit
 	beginning_date       DATE NOT NULL,
 	ending_date          DATE NOT NULL,
 	id_medical_staff     INTEGER NOT NULL,
-	id_patient           INTEGER NOT NULL,
-	id_case              INTEGER NOT NULL
+	id_patient           INTEGER NOT NULL
 );
 
 
@@ -82,7 +81,7 @@ CREATE TABLE IF NOT EXISTS pdf_file
 (
 	id                   INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	name                 VARCHAR(20) NOT NULL,
-	data                 BLOB NOT NULL,
+	data                 MEDIUMBLOB NOT NULL,
 	id_case              INTEGER NOT NULL
 );
 
@@ -124,8 +123,3 @@ ADD FOREIGN KEY VISIT_MEDICAL_STAFF_FK (id_medical_staff) REFERENCES Medical_sta
 
 ALTER TABLE Visit
 ADD FOREIGN KEY VISIT_PATIENT_FK (id_patient) REFERENCES Patient (id);
-
-
-
-ALTER TABLE Visit
-ADD FOREIGN KEY VISIT_MEDICAL_CASE_FK (id_case) REFERENCES Medical_case (id);
