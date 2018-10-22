@@ -22,9 +22,6 @@ public class VisitEntity {
     @Temporal(TemporalType.DATE)
     private Date endingDate;
     @ManyToOne
-    @JoinColumn(name = "id_case", nullable = false)
-    private MedicalCaseEntity medicalCase;
-    @ManyToOne
     @JoinColumn(name = "id_medical_staff", nullable = false)
     private MedicalStaffEntity medicalStaff;
     @ManyToOne
@@ -50,13 +47,6 @@ public class VisitEntity {
     }
     public void setEndingDate(Date endingDate) {
         this.endingDate = endingDate;
-    }
-
-    public MedicalCaseEntity getMedicalCase() {
-        return medicalCase;
-    }
-    public void setMedicalCase(MedicalCaseEntity medicalCase) {
-        this.medicalCase = medicalCase;
     }
 
     public MedicalStaffEntity getMedicalStaff() {

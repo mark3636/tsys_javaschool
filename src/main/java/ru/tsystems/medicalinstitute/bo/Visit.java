@@ -7,18 +7,16 @@ public class Visit {
     private int id;
     private Date beginningDate;
     private Date endingDate;
-    private MedicalCase medicalCase;
     private MedicalStaff medicalStaff;
     private Patient patient;
 
     public Visit() {
     }
 
-    public Visit(int id, Date beginningDate, Date endingDate, MedicalCase medicalCase, MedicalStaff medicalStaff, Patient patient) {
+    public Visit(int id, Date beginningDate, Date endingDate, MedicalStaff medicalStaff, Patient patient) {
         this.id = id;
         this.beginningDate = beginningDate;
         this.endingDate = endingDate;
-        this.medicalCase = medicalCase;
         this.medicalStaff = medicalStaff;
         this.patient = patient;
     }
@@ -42,13 +40,6 @@ public class Visit {
     }
     public void setEndingDate(Date endingDate) {
         this.endingDate = endingDate;
-    }
-
-    public MedicalCase getMedicalCase() {
-        return medicalCase;
-    }
-    public void setMedicalCase(MedicalCase medicalCase) {
-        this.medicalCase = medicalCase;
     }
 
     public MedicalStaff getMedicalStaff() {

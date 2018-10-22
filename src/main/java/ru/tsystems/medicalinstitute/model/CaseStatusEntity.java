@@ -14,7 +14,7 @@ public class CaseStatusEntity {
     private String name;
     @Column(name = "description", length = 200)
     private String description;
-    
+
     public int getId() {
         return id;
     }
