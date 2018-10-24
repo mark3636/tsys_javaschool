@@ -5,8 +5,7 @@
 <html>
 <head>
     <title>Medical cases</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/> ">
 </head>
 <body>
 <div class="container">
@@ -21,7 +20,8 @@
                 <th>Ending date</th>
                 <th>Case status</th>
                 <th>Details</th>
-                <th colspan="3"></th>
+                <th>Complete</th>
+                <th>Cancel</th>
             </tr>
             <c:forEach items="${medicalCases}" var="medicalCase">
                 <tr>
@@ -36,6 +36,10 @@
                     <c:if test="${medicalCase.caseStatus.name eq 'OPENED'}">
                         <td><a href="<c:url value='/medical-case/${medicalCase.id}/complete' />">Complete</a></td>
                         <td><a href="<c:url value='/medical-case/${medicalCase.id}/cancel' />">Cancel</a></td>
+                    </c:if>
+                    <c:if test="${not(medicalCase.caseStatus.name eq 'OPENED')}">
+                        <td>-</td>
+                        <td>-</td>
                     </c:if>
                 </tr>
             </c:forEach>
