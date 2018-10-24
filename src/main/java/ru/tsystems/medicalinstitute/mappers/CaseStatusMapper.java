@@ -1,7 +1,6 @@
 package ru.tsystems.medicalinstitute.mappers;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import ru.tsystems.medicalinstitute.bo.CaseStatus;
 import ru.tsystems.medicalinstitute.model.CaseStatusEntity;
 

@@ -1,6 +1,5 @@
 package ru.tsystems.medicalinstitute.bo;
 
-import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.*;

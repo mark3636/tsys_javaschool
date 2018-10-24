@@ -76,4 +76,22 @@ public class Visit {
     public void setPatient(Patient patient) {
         this.patient = patient;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Visit visit = (Visit) o;
+        return id == visit.id &&
+                Objects.equals(visitDate, visit.visitDate) &&
+                Objects.equals(beginningTime, visit.beginningTime) &&
+                Objects.equals(endingTime, visit.endingTime) &&
+                Objects.equals(medicalStaff, visit.medicalStaff) &&
+                Objects.equals(patient, visit.patient);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, visitDate, beginningTime, endingTime, medicalStaff, patient);
+    }
 }

@@ -2,7 +2,6 @@ package ru.tsystems.medicalinstitute.model;
 
 import javax.persistence.*;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "case_status")
