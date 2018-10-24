@@ -11,6 +11,7 @@
 <body>
 <div class="container">
     <c:import url="navbar.jsp"/>
+
     <div>Number: ${medicalCase.number}</div>
     <div>Beginning date: ${medicalCase.beginningDate}</div>
     <div>Ending date:
@@ -18,7 +19,7 @@
         <c:if test="${empty medicalCase.endingDate}">Undefined</c:if>
     </div>
     <div>Case status: ${medicalCase.caseStatus.name}</div>
-    <div>Patient: ${medicalCase.patient.socialSecurityNumber}</div>
+    <div>Patient's ssn: ${medicalCase.patient.socialSecurityNumber}</div>
     <div>Medical staff: ${medicalCase.medicalStaff.name}</div>
 
     <a href="/medical-case/${medicalCase.id}/diagnosis" class="btn btn-primary mb-2">New diagnosis</a>
@@ -28,12 +29,12 @@
             <ul>
             <c:forEach items="${diagnoses}" var="diagnosis">
                 <li>
-                    Name :${diagnosis.name}, date: ${diagnosis.diagnosisDate} |  <a href="/medical-case/${medicalCase.id}/diagnosis-details">Details</a> | <a href="/medical-case/${medicalCase.id}/diagnosis/${diagnosis.id}">Edit</a>
+                    Name :${diagnosis.name}, date: ${diagnosis.diagnosisDate} |  <a href="/medical-case/${medicalCase.id}/diagnosis-details/${diagnosis.id}">Details</a> | <a href="/medical-case/${medicalCase.id}/diagnosis/${diagnosis.id}">Edit</a>
                 </li>
             </c:forEach>
             </ul>
-        </table>
     </c:if>
+
     <div><c:if test="${empty diagnoses}">No diagnoses</c:if></div>
 
     <form method="post" action="/medical-case/${medicalCase.id}/upload" enctype="multipart/form-data">
@@ -42,6 +43,7 @@
             <input class="mt-2 btn btn-primary" type="submit" value="Add document"/>
         </div>
     </form>
+
     <c:if test="${not empty pdfFiles}">
         <div>Attachments:</div>
             <ul>
@@ -53,6 +55,7 @@
             </c:forEach>
             </ul>
     </c:if>
+
     <c:if test="${empty pdfFiles}">No attachments</c:if>
 </div>
 </body>

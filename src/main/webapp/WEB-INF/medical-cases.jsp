@@ -21,7 +21,7 @@
                 <th>Ending date</th>
                 <th>Case status</th>
                 <th>Details</th>
-                <th>Change status</th>
+                <th colspan="3"></th>
             </tr>
             <c:forEach items="${medicalCases}" var="medicalCase">
                 <tr>
@@ -33,7 +33,10 @@
                     </td>
                     <td>${medicalCase.caseStatus.name}</td>
                     <td><a href="<c:url value='/medical-case/${medicalCase.id}' />">Details</a></td>
-                    <td><a href="<c:url value='/medical-case/${medicalCase.id}/change-status' />">Change status</a></td>
+                    <c:if test="${medicalCase.caseStatus.name eq 'OPENED'}">
+                        <td><a href="<c:url value='/medical-case/${medicalCase.id}/complete' />">Complete</a></td>
+                        <td><a href="<c:url value='/medical-case/${medicalCase.id}/cancel' />">Cancel</a></td>
+                    </c:if>
                 </tr>
             </c:forEach>
         </table>

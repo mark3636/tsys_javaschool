@@ -16,7 +16,7 @@
             <input class="form-control mr-sm-2" type="search" name="surname" value="${surname}" placeholder="Surname" aria-label="Search">
             <input class="form-control mr-sm-2" type="date" name="birthday" value="${birthday}" placeholder="Birthday" aria-label="Search">
             <input class="form-control mr-sm-2" type="search" name="caseNumber" value="${caseNumber}" placeholder="Medical case number" aria-label="Search">
-            <button class="btn btn-outline-success <%--my-2 my-sm-0--%> float-right" type="submit">Search</button>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </nav>
 
@@ -44,7 +44,8 @@
                         <td>${patient.phoneNumber}</td>
                         <td><a href="<c:url value='/patient-details/${patient.id}' />">Details</a></td>
                         <td><a href="<c:url value='/patient/${patient.id}' />">Edit</a></td>
-                        <td><a href="<c:url value='/remove/${patient.id}' />">Delete</a></td>
+                        <td><a href="<c:url value='/remove/${patient.id}' />"
+                               onclick="return confirmDelete(this, '${pageContext.request.contextPath}/remove/${patient.id}')">Delete</a></td>
                     </tr>
                 </c:forEach>
             </table>
@@ -54,5 +55,6 @@
         </c:if>
     </div>
 </div>
+<script type="text/javascript" src="<c:url value="/resources/javascript/utils.js"/> "></script>
 </body>
 </html>

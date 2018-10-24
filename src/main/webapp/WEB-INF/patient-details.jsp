@@ -46,6 +46,21 @@
             </c:forEach>
         </ul>
     </c:if>
+    <c:if test="${empty medicalCases}">
+        <div>No medical cases</div>
+    </c:if>
+    <c:if test="${not empty visits}">
+        <div>Visits:</div>
+        <ul>
+            <c:forEach items="${visits}" var="visit">
+                <li>Visit date: ${visit.visitDate} |
+                    Beginning time: ${visit.beginningTime} |
+                    Ending time: ${visit.endingTime} |
+                    Medical staff: ${visit.medicalStaff.name} ${visit.medicalStaff.surname}
+                </li>
+            </c:forEach>
+        </ul>
+    </c:if>
     <div>
         <a href="/patients">Back</a>
     </div>
