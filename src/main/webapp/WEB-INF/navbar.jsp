@@ -15,6 +15,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/medical-staff">Medical staff</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
         </ul>
     </div>
 </nav>

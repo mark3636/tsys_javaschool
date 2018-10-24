@@ -13,8 +13,8 @@
     <c:import url="navbar.jsp"/>
     <h3>Patient:</h3>
     <div>
-        <a href="<c:url value="/patient-details/${patient.id}/new-visit"/> ">New visit</a>
-        <a href="<c:url value="/patient-details/${patient.id}/add-case"/> ">Add medical case</a>
+        <a href="<c:url value="/patient-details/${patient.id}/new-visit"/> ">New visit</a> |
+        <a href="<c:url value="/patient-details/${patient.id}/new-medical-case"/> ">Add medical case</a>
     </div>
     <div>Social security number: ${patient.socialSecurityNumber}</div>
     <div>Name: ${patient.name}</div>
@@ -33,17 +33,18 @@
     </c:if>
     <c:if test="${not empty medicalCases}">
         <div>Medical cases:</div>
-        <c:forEach items="${medicalCases}" var="medicalCase">
-            <div>
-                <div>Case number: ${medicalCase.number}</div>
-                <div>Beginning date: ${medicalCase.beginningDate}</div>
-                <c:if test="${not empty medicalCase.endingDate}">
-                    <div>Ending date: ${medicalCase.endingDate}</div>
-                </c:if>
-                <div>Case status: ${medicalCase.caseStatus.name}</div>
-                <div><a href="<c:url value="/medical-case/${medicalCase.id}"/>">Details</a></div>
-            </div>
-        </c:forEach>
+        <ul>
+            <c:forEach items="${medicalCases}" var="medicalCase">
+                <li>Case number: ${medicalCase.number} |
+                    Beginning date: ${medicalCase.beginningDate} |
+                    <c:if test="${not empty medicalCase.endingDate}">
+                        Ending date: ${medicalCase.endingDate} |
+                    </c:if>
+                    Case status: ${medicalCase.caseStatus.name} |
+                    <a href="<c:url value="/medical-case/${medicalCase.id}"/>">Details</a>
+                </li>
+            </c:forEach>
+        </ul>
     </c:if>
     <div>
         <a href="/patients">Back</a>

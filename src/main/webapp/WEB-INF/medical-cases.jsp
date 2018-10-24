@@ -11,6 +11,7 @@
 <body>
 <div class="container">
     <c:import url="navbar.jsp"/>
+
     <h3>Medical cases</h3>
     <c:if test="${!empty medicalCases}">
         <table class="table table-striped">
