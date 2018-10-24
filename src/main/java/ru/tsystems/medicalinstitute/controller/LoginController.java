@@ -10,41 +10,43 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.tsystems.medicalinstitute.bo.MedicalStaff;
 import ru.tsystems.medicalinstitute.service.MedicalStaffService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Controller
 public class LoginController {
     @Autowired
     MedicalStaffService medicalStaffService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(@RequestParam(value = "error", required = false) String error) {
-//        MedicalStaff medicalStaff = new MedicalStaff();
-//        medicalStaff.setName("ivan");
-//        medicalStaff.setSurname("ivanov");
-//        medicalStaff.setBirthday(new Date());
-//        medicalStaff.setEmail("ivan@mail.ru");
-//        medicalStaff.setPassword(passwordEncoder.encode("ivan"));
-//        medicalStaffService.add(medicalStaff);
-
         return "login";
     }
-
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
-        Authentication auth = SecurityContextHolder.getContext()
-                .getAuthentication();
-        if (auth != null) {
-            new SecurityContextLogoutHandler().logout(request, response, auth);
-            request.getSession().invalidate();
-        }
-
-        return "redirect:/";
-    }
+//
+//    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+//    public String logout(HttpServletRequest request, HttpServletResponse response) throws ParseException {
+//        Authentication auth = SecurityContextHolder.getContext()
+//                .getAuthentication();
+//        if (auth != null) {
+//            new SecurityContextLogoutHandler().logout(request, response, auth);
+//            request.getSession().invalidate();
+//        }
+//
+//        MedicalStaff medicalStaff = new MedicalStaff();
+//        medicalStaff.setName("Maria");
+//        medicalStaff.setSurname("Hirurgova");
+//        medicalStaff.setEmail("hirurg@mail.ru");
+//        medicalStaff.setPassword("hirurg");
+//        medicalStaff.setBirthday(new SimpleDateFormat().parse("1997-12-05"));
+//        medicalStaffService.add(medicalStaff);
+//
+//        return "/login";
+//    }
 }

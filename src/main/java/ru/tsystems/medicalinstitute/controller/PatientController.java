@@ -7,14 +7,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.tsystems.medicalinstitute.bo.MedicalCase;
+import ru.tsystems.medicalinstitute.bo.MedicalStaff;
 import ru.tsystems.medicalinstitute.bo.Patient;
 import ru.tsystems.medicalinstitute.bo.Visit;
 import ru.tsystems.medicalinstitute.service.MedicalCaseService;
+import ru.tsystems.medicalinstitute.service.MedicalStaffService;
 import ru.tsystems.medicalinstitute.service.PatientService;
 import ru.tsystems.medicalinstitute.service.VisitService;
-import ru.tsystems.medicalinstitute.validators.PatientValidator;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class PatientController {
     @Autowired
     private VisitService visitService;
     @Autowired
-    private PatientValidator validator;
+    private MedicalStaffService medicalStaffService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String homePage(Model model) {
@@ -53,6 +53,9 @@ public class PatientController {
                     .filter(patient -> patient.getSurname().contains(surname)).collect(Collectors.toList());
             ;
         }
+
+        //registr
+        //в сервис
 
         if (birthday != null && !birthday.isEmpty()) {
             Date date = new SimpleDateFormat("yyyy-MM-dd").parse(birthday);
@@ -80,6 +83,7 @@ public class PatientController {
         model.addAttribute("birthday", birthday);
         model.addAttribute("caseNumber", caseNumber);
         model.addAttribute("listPatients", patients);
+
         return "patients";
     }
 
@@ -87,6 +91,7 @@ public class PatientController {
     public String addPatient(Model model) {
         Patient patient = new Patient();
         model.addAttribute("patient", patient);
+
         return "patient";
     }
 
@@ -94,6 +99,7 @@ public class PatientController {
     public String detailPatient(@PathVariable("id") int id, Model model) {
         model.addAttribute("patient", patientService.getById(id));
         List<MedicalCase> medicalCases = medicalCaseService.getByPatientId(id);
+        model.addAttribute("visits", visitService.getByPatientId(id));
         model.addAttribute("medicalCases", medicalCases);
         String patientStatus = "Undefined";
 
@@ -115,29 +121,29 @@ public class PatientController {
     @RequestMapping(value = "/patient-details/{patientId}/new-visit", method = RequestMethod.GET)
     public String newVisit(@PathVariable("patientId") int id, Model model) {
         model.addAttribute("patient", patientService.getById(id));
+        model.addAttribute("visits", visitService.listVisits());
+        model.addAttribute("medicalStaff", medicalStaffService.listMedicalStaff());
+        model.addAttribute("medicalStaffId", "");
+
         return "visit";
     }
 
-    @RequestMapping(value = "/new-visit", method = RequestMethod.POST)
-    public String newVisit(@ModelAttribute("visit") @Validated Visit visit, Model model) {
+    @RequestMapping(value = "/patient-details/{patientId}/new-visit", method = RequestMethod.POST)
+    public String newVisit(@ModelAttribute("visit") Visit visit, @PathVariable("patientId") int patientId, @ModelAttribute("medicalStaffId") int medicalStaffId, Model model) {
+        visit.setMedicalStaff(medicalStaffService.getById(medicalStaffId));
+        visit.setPatient(patientService.getById(patientId));
         visitService.add(visit);
-        int patientId = visit.getPatient().getId();
+
         return "redirect:/patient-details/{patientId}";
     }
 
     @RequestMapping(value = "/patient", method = RequestMethod.POST)
     public String addPatient(@ModelAttribute("patient") @Validated Patient patient, BindingResult result, Model model) {
-        validator.validate(patient, result);
-
         int id = patient.getId();
         model.addAttribute("id", id);
 
         if (result.hasErrors()) {
-            if (id == 0) {
-                return "patient";
-            } else {
-                return "redirect:/patient/{id}";
-            }
+            return "patient";
         }
 
         if (id == 0) {
