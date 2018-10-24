@@ -19,7 +19,6 @@ public class MedicalStaffDAOImpl extends AbstractDAOImpl<MedicalStaffEntity> imp
     public MedicalStaffEntity findByEmail(String email) {
         Query query = getSession().createQuery("from MedicalStaffEntity where email = :email");
         query.setParameter("email", email);
-        Object result = query.getSingleResult();
-        return result == null ? null : (MedicalStaffEntity) result;
+        return (MedicalStaffEntity) query.getSingleResult();
     }
 }

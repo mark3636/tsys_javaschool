@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface VisitDAO extends AbstractDAO<VisitEntity> {
     List<VisitEntity> listVisits();
+    List<VisitEntity> getByPatientId(int id);
 }
