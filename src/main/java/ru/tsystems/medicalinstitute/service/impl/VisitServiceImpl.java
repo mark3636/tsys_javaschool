@@ -25,6 +25,11 @@ public class VisitServiceImpl implements VisitService {
     }
 
     @Override
+    public List<Visit> getByPatientId(int id) {
+        return mapper.toBos(visitDAO.getByPatientId(id));
+    }
+
+    @Override
     public void add(Visit bo) {
         visitDAO.add(mapper.fromBo(bo));
     }

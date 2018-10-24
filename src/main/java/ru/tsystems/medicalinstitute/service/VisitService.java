@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface VisitService extends AbstractService<Visit> {
     List<Visit> listVisits();
+    List<Visit> getByPatientId(int id);
 }
