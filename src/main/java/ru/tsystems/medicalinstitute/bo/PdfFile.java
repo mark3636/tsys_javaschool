@@ -1,6 +1,7 @@
 package ru.tsystems.medicalinstitute.bo;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class PdfFile {
     private int id;
@@ -9,6 +10,24 @@ public class PdfFile {
     private MedicalCase medicalCase;
 
     public PdfFile() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PdfFile pdfFile = (PdfFile) o;
+        return id == pdfFile.id &&
+                Objects.equals(name, pdfFile.name) &&
+                Arrays.equals(data, pdfFile.data) &&
+                Objects.equals(medicalCase, pdfFile.medicalCase);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(id, name, medicalCase);
+        result = 31 * result + Arrays.hashCode(data);
+        return result;
     }
 
     public PdfFile(int id, String name, byte[] data, MedicalCase medicalCase) {
@@ -46,25 +65,4 @@ public class PdfFile {
         this.medicalCase = medicalCase;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        PdfFile that = (PdfFile) o;
-
-        if (id != that.id) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (!Arrays.equals(data, that.data)) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + Arrays.hashCode(data);
-        return result;
-    }
 }

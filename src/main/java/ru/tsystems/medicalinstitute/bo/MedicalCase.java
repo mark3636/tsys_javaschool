@@ -1,16 +1,40 @@
 package ru.tsystems.medicalinstitute.bo;
 
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
+import java.util.Objects;
 
 public class MedicalCase {
     private int id;
     private String number;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date beginningDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endingDate;
     private CaseStatus caseStatus;
     private Patient patient;
     private MedicalStaff medicalStaff;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MedicalCase that = (MedicalCase) o;
+        return id == that.id &&
+                Objects.equals(number, that.number) &&
+                Objects.equals(beginningDate, that.beginningDate) &&
+                Objects.equals(endingDate, that.endingDate) &&
+                Objects.equals(caseStatus, that.caseStatus) &&
+                Objects.equals(patient, that.patient) &&
+                Objects.equals(medicalStaff, that.medicalStaff);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, number, beginningDate, endingDate, caseStatus, patient, medicalStaff);
+    }
 
     public MedicalCase() {
     }
@@ -75,28 +99,4 @@ public class MedicalCase {
     }
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        MedicalCase that = (MedicalCase) o;
-
-        if (id != that.id) return false;
-        if (number != null ? !number.equals(that.number) : that.number != null) return false;
-        if (beginningDate != null ? !beginningDate.equals(that.beginningDate) : that.beginningDate != null)
-            return false;
-        if (endingDate != null ? !endingDate.equals(that.endingDate) : that.endingDate != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (number != null ? number.hashCode() : 0);
-        result = 31 * result + (beginningDate != null ? beginningDate.hashCode() : 0);
-        result = 31 * result + (endingDate != null ? endingDate.hashCode() : 0);
-        return result;
-    }
 }

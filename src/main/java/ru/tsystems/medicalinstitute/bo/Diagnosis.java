@@ -1,10 +1,14 @@
 package ru.tsystems.medicalinstitute.bo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
+import java.util.Objects;
 
 public class Diagnosis {
     private int id;
     private String name;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date diagnosisDate;
     private String comment;
     private MedicalStaff medicalStaff;
@@ -68,24 +72,17 @@ public class Diagnosis {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        Diagnosis that = (Diagnosis) o;
-
-        if (id != that.id) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (diagnosisDate != null ? !diagnosisDate.equals(that.diagnosisDate) : that.diagnosisDate != null)
-            return false;
-        if (comment != null ? !comment.equals(that.comment) : that.comment != null) return false;
-
-        return true;
+        Diagnosis diagnosis = (Diagnosis) o;
+        return id == diagnosis.id &&
+                Objects.equals(name, diagnosis.name) &&
+                Objects.equals(diagnosisDate, diagnosis.diagnosisDate) &&
+                Objects.equals(comment, diagnosis.comment) &&
+                Objects.equals(medicalStaff, diagnosis.medicalStaff) &&
+                Objects.equals(medicalCase, diagnosis.medicalCase);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (diagnosisDate != null ? diagnosisDate.hashCode() : 0);
-        result = 31 * result + (comment != null ? comment.hashCode() : 0);
-        return result;
+        return Objects.hash(id, name, diagnosisDate, comment, medicalStaff, medicalCase);
     }
 }
