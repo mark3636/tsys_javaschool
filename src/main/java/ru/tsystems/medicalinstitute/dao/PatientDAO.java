@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface PatientDAO extends AbstractDAO<PatientEntity> {
     List<PatientEntity> listPatients();
+    PatientEntity getBySocialSecurityNumber(int socialSecurityNumber);
 }

@@ -15,6 +15,7 @@ public class MedicalStaffController {
     @RequestMapping(value = "/medical-staff", method = RequestMethod.GET)
     public String listMedicalStaff(Model model) {
         model.addAttribute("listMedicalStaff", medicalStaffService.listMedicalStaff());
+
         return "medical-staff";
     }
 }

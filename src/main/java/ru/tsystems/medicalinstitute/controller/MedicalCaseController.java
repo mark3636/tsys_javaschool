@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.tsystems.medicalinstitute.bo.Diagnosis;
 import ru.tsystems.medicalinstitute.bo.MedicalCase;
-import ru.tsystems.medicalinstitute.bo.MedicalStaff;
 import ru.tsystems.medicalinstitute.bo.PdfFile;
 import ru.tsystems.medicalinstitute.service.*;
 
@@ -36,6 +35,7 @@ public class MedicalCaseController {
     @RequestMapping(value = "/patient-details/{patientId}/new-medical-case", method = RequestMethod.GET)
     public String newMedicalCase(@PathVariable("patientId") int patientId, Model model) {
         MedicalCase medicalCase = new MedicalCase();
+
         model.addAttribute("patient", patientService.getById(patientId));
         model.addAttribute("medicalStaff", medicalStaffService.listMedicalStaff());
         model.addAttribute("medicalCase", medicalCase);
@@ -74,7 +74,6 @@ public class MedicalCaseController {
     @RequestMapping(value = "/medical-case/{id}/cancel")
     public String cancelMedicalCase(@PathVariable("id") int id, Model model) {
         MedicalCase medicalCase = medicalCaseService.getById(id);
-
         medicalCase.setCaseStatus(caseStatusService.getByName("CANCELLED"));
         medicalCase.setEndingDate(new Date());
 
@@ -123,13 +122,12 @@ public class MedicalCaseController {
 
     @RequestMapping(value = "/medical-case/{medicalCaseId}/diagnosis", method = RequestMethod.POST)
     public String addPatient(@PathVariable("medicalCaseId") int medicalCaseId, @ModelAttribute("diagnosis") Diagnosis diagnosis,  Model model) {
-        diagnosis.setMedicalCase(medicalCaseService.getById(medicalCaseId));
-        diagnosis.setDiagnosisDate(new Date());
-
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        diagnosis.setMedicalStaff(medicalStaffService.findByEmail(userDetails.getUsername()));
-
         if (diagnosis.getId() == 0) {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            diagnosis.setMedicalStaff(medicalStaffService.findByEmail(userDetails.getUsername()));
+            diagnosis.setMedicalCase(medicalCaseService.getById(medicalCaseId));
+            diagnosis.setDiagnosisDate(new Date());
+
             diagnosisService.add(diagnosis);
         } else {
             diagnosisService.update(diagnosis);
@@ -169,7 +167,9 @@ public class MedicalCaseController {
             response.setContentLength(pdfFile.getData().length);
             FileCopyUtils.copy(pdfFile.getData(), response.getOutputStream());
 
-        } catch (IOException e) {}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return "redirect:/medical-case/{caseId}";
     }
