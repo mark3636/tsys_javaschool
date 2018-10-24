@@ -66,11 +66,12 @@ CREATE TABLE IF NOT EXISTS Patient
 
 
 
-CREATE TABLE Visit
+CREATE TABLE IF NOT EXISTS Visit
 (
 	id                   INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	beginning_date       DATE NOT NULL,
-	ending_date          DATE NOT NULL,
+	visit_date       DATE NOT NULL,
+	beginning_time       TIME NOT NULL,
+	ending_time          TIME NOT NULL,
 	id_medical_staff     INTEGER NOT NULL,
 	id_patient           INTEGER NOT NULL
 );
@@ -118,7 +119,6 @@ ADD FOREIGN KEY PDF_FILE_CASE_FK (id_case) REFERENCES Medical_case (id);
 
 ALTER TABLE Visit
 ADD FOREIGN KEY VISIT_MEDICAL_STAFF_FK (id_medical_staff) REFERENCES Medical_staff (id);
-
 
 
 ALTER TABLE Visit
