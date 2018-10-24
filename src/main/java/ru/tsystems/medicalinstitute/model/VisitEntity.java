@@ -2,6 +2,7 @@ package ru.tsystems.medicalinstitute.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
@@ -13,14 +14,18 @@ public class VisitEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    @Column(name = "beginning_date")
+    @Column(name = "visit_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
-    private Date beginningDate;
-    @Column(name = "ending_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
-    private Date endingDate;
+    private Date visitDate;
+    @Column(name = "beginning_time")
+    @DateTimeFormat(pattern = "HH:mm")
+    @Temporal(TemporalType.TIME)
+    private Date beginningTime;
+    @Column(name = "ending_time")
+    @DateTimeFormat(pattern = "HH:mm")
+    @Temporal(TemporalType.TIME)
+    private Date endingTime;
     @ManyToOne
     @JoinColumn(name = "id_medical_staff", nullable = false)
     private MedicalStaffEntity medicalStaff;
@@ -35,18 +40,25 @@ public class VisitEntity {
         this.id = id;
     }
 
-    public Date getBeginningDate() {
-        return beginningDate;
+    public Date getVisitDate() {
+        return visitDate;
     }
-    public void setBeginningDate(Date beginningDate) {
-        this.beginningDate = beginningDate;
+    public void setVisitDate(Date visitDate) {
+        this.visitDate = visitDate;
     }
 
-    public Date getEndingDate() {
-        return endingDate;
+    public Date getBeginningTime() {
+        return beginningTime;
     }
-    public void setEndingDate(Date endingDate) {
-        this.endingDate = endingDate;
+    public void setBeginningTime(Date beginningTime) {
+        this.beginningTime = beginningTime;
+    }
+
+    public Date getEndingTime() {
+        return endingTime;
+    }
+    public void setEndingTime(Date endingTime) {
+        this.endingTime = endingTime;
     }
 
     public MedicalStaffEntity getMedicalStaff() {
@@ -69,12 +81,15 @@ public class VisitEntity {
         if (o == null || getClass() != o.getClass()) return false;
         VisitEntity that = (VisitEntity) o;
         return id == that.id &&
-                Objects.equals(beginningDate, that.beginningDate) &&
-                Objects.equals(endingDate, that.endingDate);
+                Objects.equals(visitDate, that.visitDate) &&
+                Objects.equals(beginningTime, that.beginningTime) &&
+                Objects.equals(endingTime, that.endingTime) &&
+                Objects.equals(medicalStaff, that.medicalStaff) &&
+                Objects.equals(patient, that.patient);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, beginningDate, endingDate);
+        return Objects.hash(id, visitDate, beginningTime, endingTime, medicalStaff, patient);
     }
 }

@@ -2,6 +2,7 @@ package ru.tsystems.medicalinstitute.model;
 
 import javax.persistence.*;
 import java.util.Arrays;
+import java.util.Objects;
 
 @Entity
 @Table(name = "pdf_file")
@@ -17,6 +18,24 @@ public class PdfFileEntity {
     @ManyToOne
     @JoinColumn(name = "id_case", nullable = false)
     private MedicalCaseEntity medicalCase;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PdfFileEntity that = (PdfFileEntity) o;
+        return id == that.id &&
+                Objects.equals(name, that.name) &&
+                Arrays.equals(data, that.data) &&
+                Objects.equals(medicalCase, that.medicalCase);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(id, name, medicalCase);
+        result = 31 * result + Arrays.hashCode(data);
+        return result;
+    }
 
     public int getId() {
         return id;
@@ -46,25 +65,4 @@ public class PdfFileEntity {
         this.medicalCase = medicalCase;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        PdfFileEntity that = (PdfFileEntity) o;
-
-        if (id != that.id) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (!Arrays.equals(data, that.data)) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + Arrays.hashCode(data);
-        return result;
-    }
 }

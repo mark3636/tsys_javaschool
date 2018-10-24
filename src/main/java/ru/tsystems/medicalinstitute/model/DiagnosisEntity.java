@@ -2,6 +2,7 @@ package ru.tsystems.medicalinstitute.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "diagnosis")
@@ -70,24 +71,17 @@ public class DiagnosisEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        DiagnosisEntity that = (DiagnosisEntity) o;
-
-        if (id != that.id) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (diagnosisDate != null ? !diagnosisDate.equals(that.diagnosisDate) : that.diagnosisDate != null)
-            return false;
-        if (comment != null ? !comment.equals(that.comment) : that.comment != null) return false;
-
-        return true;
+        DiagnosisEntity entity = (DiagnosisEntity) o;
+        return id == entity.id &&
+                Objects.equals(name, entity.name) &&
+                Objects.equals(diagnosisDate, entity.diagnosisDate) &&
+                Objects.equals(comment, entity.comment) &&
+                Objects.equals(medicalStaff, entity.medicalStaff) &&
+                Objects.equals(medicalCase, entity.medicalCase);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (diagnosisDate != null ? diagnosisDate.hashCode() : 0);
-        result = 31 * result + (comment != null ? comment.hashCode() : 0);
-        return result;
+        return Objects.hash(id, name, diagnosisDate, comment, medicalStaff, medicalCase);
     }
 }

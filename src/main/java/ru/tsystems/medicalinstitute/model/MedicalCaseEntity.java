@@ -2,6 +2,7 @@ package ru.tsystems.medicalinstitute.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -83,24 +84,18 @@ public class MedicalCaseEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         MedicalCaseEntity that = (MedicalCaseEntity) o;
-
-        if (id != that.id) return false;
-        if (number != null ? !number.equals(that.number) : that.number != null) return false;
-        if (beginningDate != null ? !beginningDate.equals(that.beginningDate) : that.beginningDate != null)
-            return false;
-        if (endingDate != null ? !endingDate.equals(that.endingDate) : that.endingDate != null) return false;
-
-        return true;
+        return id == that.id &&
+                Objects.equals(number, that.number) &&
+                Objects.equals(beginningDate, that.beginningDate) &&
+                Objects.equals(endingDate, that.endingDate) &&
+                Objects.equals(caseStatus, that.caseStatus) &&
+                Objects.equals(patient, that.patient) &&
+                Objects.equals(medicalStaff, that.medicalStaff);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (number != null ? number.hashCode() : 0);
-        result = 31 * result + (beginningDate != null ? beginningDate.hashCode() : 0);
-        result = 31 * result + (endingDate != null ? endingDate.hashCode() : 0);
-        return result;
+        return Objects.hash(id, number, beginningDate, endingDate, caseStatus, patient, medicalStaff);
     }
 }
