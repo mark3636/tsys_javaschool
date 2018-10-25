@@ -2,15 +2,23 @@ package ru.tsystems.medicalinstitute.bo;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Objects;
 
 public class Visit {
     private int id;
+    @Future
+    @NotNull(message = "Visit date should be chosen")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date visitDate;
+    @Future
+    @NotNull(message = "Beginning time should be chosen")
     @DateTimeFormat(pattern = "HH:mm")
     private Date beginningTime;
+    @Future
+    @NotNull(message = "Ending time should be chosen")
     @DateTimeFormat(pattern = "HH:mm")
     private Date endingTime;
     private MedicalStaff medicalStaff;

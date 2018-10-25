@@ -3,11 +3,15 @@ package ru.tsystems.medicalinstitute.bo;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.Objects;
 
 public class MedicalCase {
     private int id;
+    @NotEmpty(message = "Number cannot be empty")
+    @Size(min = 10, max = 10, message = "Name length should be equals to 10")
     private String number;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date beginningDate;

@@ -1,5 +1,6 @@
 package ru.tsystems.medicalinstitute.bo;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.*;
@@ -23,7 +24,7 @@ public class Patient {
     @NotEmpty(message = "Address details cannot be empty")
     private String address;
     @NotEmpty(message = "Email cannot be empty")
-    @Pattern(regexp = "\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b", message = "Email should be correct")
+    @Email(message = "Email should be correct")
     private String email;
     @NotEmpty(message = "Phone number cannot be empty")
     @Size(min = 5, max = 11, message = "Phone number length should be between 5 to 11")
@@ -31,7 +32,7 @@ public class Patient {
     private String phoneNumber;
     private String comment;
     @NotNull(message = "Social security number cannot be empty")
-    @Digits(integer = 9, fraction = 0, message = "Social security number length should be 9")
+    @Range(min = 100000000, max = 999999999, message = "Social security number length should be 9")
     private int socialSecurityNumber;
 
     public Patient() {

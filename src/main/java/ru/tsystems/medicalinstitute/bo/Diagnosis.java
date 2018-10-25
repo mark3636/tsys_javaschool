@@ -2,11 +2,13 @@ package ru.tsystems.medicalinstitute.bo;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.Objects;
 
 public class Diagnosis {
     private int id;
+    @NotEmpty(message = "Diagnosis name cannot be empty")
     private String name;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date diagnosisDate;
