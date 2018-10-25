@@ -45,8 +45,8 @@
             </c:forEach>
         </ul>
     </c:if>
-    <c:if test="${empty medicalCases}">
-        <div>No medical cases</div>
+    <c:if test="${empty visits}">
+        <div>No visits</div>
     </c:if>
     <c:if test="${not empty visits}">
         <div>Visits:</div>
@@ -55,7 +55,7 @@
                 <li>Visit date: ${visit.visitDate} |
                     Beginning time: ${visit.beginningTime} |
                     Ending time: ${visit.endingTime} |
-                    Medical staff: ${visit.medicalStaff.name} ${visit.medicalStaff.surname}
+                    Medical staff: Dr. ${visit.medicalStaff.name} ${visit.medicalStaff.surname}
                 </li>
             </c:forEach>
         </ul>

@@ -6,6 +6,7 @@
 <head>
     <title>New medical case</title>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/> ">
+    <link rel="stylesheet" href="<c:url value="/resources/css/styles.css"/> ">
 </head>
 <body>
 <div class="container">
@@ -23,7 +24,7 @@
             <label for="medicalStaff">Medical staff</label>
             <form:select path="medicalStaff" name="medicalStaffId" id="medicalStaff" cssClass="form-control">
                 <c:forEach items="${medicalStaff}" var="staff">
-                    <form:option value="${staff.id}" label="${staff.name} ${staff.surname}"/>
+                    <form:option value="${staff.id}" label="Dr. ${staff.name} ${staff.surname}"/>
                 </c:forEach>
             </form:select>
         </div>
@@ -31,10 +32,10 @@
         <div>
             <input class="btn btn-primary" type="submit"
                    value="<spring:message text="Add"/>"/>
-            <a href="/patient-details/${patient.id}">Back</a>
         </div>
-
     </form>
+
+    <a href="/patient-details/${patient.id}">Back</a>
 </div>
 </body>
 </html>

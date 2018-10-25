@@ -19,7 +19,7 @@
     </div>
     <div>Case status: ${medicalCase.caseStatus.name}</div>
     <div>Patient's ssn: ${medicalCase.patient.socialSecurityNumber}</div>
-    <div>Medical staff: ${medicalCase.medicalStaff.name}</div>
+    <div>Medical staff: Dr. ${medicalCase.medicalStaff.name} ${medicalCase.medicalStaff.surname}</div>
 
     <a href="/medical-case/${medicalCase.id}/diagnosis" class="btn btn-primary mb-2">New diagnosis</a>
 
