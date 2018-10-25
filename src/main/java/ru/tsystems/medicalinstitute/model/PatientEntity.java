@@ -6,6 +6,9 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * This entity represents patient of medical institute.
+ */
 @Entity
 @Table(name = "patient")
 public class PatientEntity {

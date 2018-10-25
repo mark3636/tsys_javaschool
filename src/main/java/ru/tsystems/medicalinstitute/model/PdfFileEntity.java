@@ -4,6 +4,9 @@ import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * This entity represents files, which you can attach to particular medical case.
+ */
 @Entity
 @Table(name = "pdf_file")
 public class PdfFileEntity {

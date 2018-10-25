@@ -3,6 +3,9 @@ package ru.tsystems.medicalinstitute.model;
 import javax.persistence.*;
 import java.util.Objects;
 
+/**
+ * This entity represents medical case status.
+ */
 @Entity
 @Table(name = "case_status")
 public class CaseStatusEntity {

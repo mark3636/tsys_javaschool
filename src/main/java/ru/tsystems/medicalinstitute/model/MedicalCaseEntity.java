@@ -4,6 +4,9 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * This entity represents medical case of particular patient.
+ */
 @Entity
 @Table(name = "medical_case")
 public class MedicalCaseEntity {
@@ -22,7 +25,7 @@ public class MedicalCaseEntity {
     @ManyToOne
     @JoinColumn(name = "id_status", nullable = false)
     private CaseStatusEntity caseStatus;
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "id_patient", nullable = false)
     private PatientEntity patient;
     @ManyToOne
