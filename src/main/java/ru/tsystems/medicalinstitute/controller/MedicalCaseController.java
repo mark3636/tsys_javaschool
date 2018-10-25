@@ -138,6 +138,10 @@ public class MedicalCaseController {
 
     @RequestMapping(value = "/medical-case/{id}/upload", method = RequestMethod.POST)
     public String savePdfFile(@PathVariable("id") int id, @RequestParam("file") MultipartFile file) {
+        if (file.getOriginalFilename() == null || file.getOriginalFilename().isEmpty()) {
+            return "redirect:/medical-case/{id}";
+        }
+
         try {
             PdfFile pdfFile = new PdfFile();
             pdfFile.setName(file.getOriginalFilename());
@@ -168,7 +172,7 @@ public class MedicalCaseController {
             FileCopyUtils.copy(pdfFile.getData(), response.getOutputStream());
 
         } catch (IOException e) {
-            e.printStackTrace();
+            return "redirect:/medical-case/{caseId}";
         }
 
         return "redirect:/medical-case/{caseId}";

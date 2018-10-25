@@ -16,6 +16,7 @@ import ru.tsystems.medicalinstitute.service.MedicalStaffService;
 import ru.tsystems.medicalinstitute.service.PatientService;
 import ru.tsystems.medicalinstitute.service.VisitService;
 
+import javax.validation.Valid;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -86,7 +87,7 @@ public class PatientController {
     }
 
     @RequestMapping(value = "/patient", method = RequestMethod.POST)
-    public String addPatient(@ModelAttribute("patient") @Validated Patient patient, BindingResult result, Model model) {
+    public String addPatient(@ModelAttribute("patient") @Valid Patient patient, BindingResult result, Model model) {
         int id = patient.getId();
         model.addAttribute("id", id);
 
