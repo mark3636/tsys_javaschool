@@ -1,7 +1,6 @@
 package ru.tsystems.medicalinstitute.service.impl;
 
 import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.medicalinstitute.bo.MedicalCase;
@@ -27,16 +26,19 @@ public class PatientServiceImpl implements PatientService {
     private final static String CLOSED = "CLOSED";
     private final static String COMPLETED = "COMPLETED";
 
-    @Autowired
-    private PatientDAO patientDAO;
-    @Autowired
-    private MedicalCaseService medicalCaseService;
-    @Autowired
-    private CaseStatusService caseStatusService;
-    @Autowired
-    private MedicalStaffService medicalStaffService;
+    private final PatientDAO patientDAO;
+    private final MedicalCaseService medicalCaseService;
+    private final CaseStatusService caseStatusService;
+    private final MedicalStaffService medicalStaffService;
 
     private PatientMapper mapper = Mappers.getMapper(PatientMapper.class);
+
+    public PatientServiceImpl(final PatientDAO patientDAO, final MedicalCaseService medicalCaseService, final CaseStatusService caseStatusService, final MedicalStaffService medicalStaffService) {
+        this.patientDAO = patientDAO;
+        this.medicalCaseService = medicalCaseService;
+        this.caseStatusService = caseStatusService;
+        this.medicalStaffService = medicalStaffService;
+    }
 
     @Override
     @Transactional
@@ -81,7 +83,7 @@ public class PatientServiceImpl implements PatientService {
 
             for (MedicalCase medicalCase : medicalCases) {
                 patients = patients.stream()
-                        .filter(patient -> patient.getId() == medicalCase.getPatient().getId()).collect(Collectors.toList());;
+                        .filter(patient -> patient.getId() == medicalCase.getPatient().getId()).collect(Collectors.toList());
             }
         }
 

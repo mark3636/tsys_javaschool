@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.tsystems.medicalinstitute.dao.PatientDAO;
 import ru.tsystems.medicalinstitute.model.PatientEntity;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -13,6 +14,15 @@ public class PatientDAOImpl extends AbstractDAOImpl<PatientEntity> implements Pa
     @Override
     public List<PatientEntity> listPatients() {
         return getSession().createQuery("from PatientEntity").list();
+    }
+
+    //???
+    @Override
+    public List<PatientEntity> filterPatients(String surname, Date birthday, String medicalCaseNumber) {
+//        Query query = getSession().createQuery("from PatientEntity as pe inner join MedicalCaseEntity as mce on pe.id = mce.patient.id" +
+//                " where pe.surname like %:surname% and pe.birthday is null " +
+//                "")
+        return null;
     }
 
     @Override
