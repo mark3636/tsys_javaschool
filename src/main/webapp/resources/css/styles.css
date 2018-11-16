@@ -9,19 +9,14 @@
 
 .form-signin {
     max-width: 380px;
-    padding: 35px 35px 45px;
+    padding: 35px 35px 25px;
     margin: 0 auto;
     background-color: #fff;
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.form-signin-heading,
-.checkbox {
+.form-signin-heading {
     margin-bottom: 30px;
-}
-
-.checkbox {
-    font-weight: normal;
 }
 
 .form-control {
