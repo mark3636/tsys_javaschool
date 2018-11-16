@@ -11,9 +11,11 @@ public class Patient {
     private int id;
     @NotEmpty(message = "Name cannot be empty")
     @Size(min = 2, max = 15, message = "Name length should be between 2 to 15")
+    @Pattern(regexp = "^[\\p{L} .'-]+$", message = "Name should contain only letters and such symbols as '.-")
     private String name;
     @NotEmpty(message = "Surname cannot be empty")
     @Size(min = 2, max = 15, message = "Surname length should be between 2 to 20")
+    @Pattern(regexp = "^[\\p{L} .'-]+$", message = "Surname should contain only letters and such symbols as '.-")
     private String surname;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Birthday should be chosen")

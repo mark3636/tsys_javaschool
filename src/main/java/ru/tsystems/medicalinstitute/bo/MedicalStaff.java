@@ -2,16 +2,29 @@ package ru.tsystems.medicalinstitute.bo;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.*;
 import java.util.Date;
 import java.util.Objects;
 
 public class MedicalStaff {
     private int id;
+    @NotEmpty(message = "Name cannot be empty")
+    @Size(min = 2, max = 15, message = "Name length should be between 2 to 15")
+    @Pattern(regexp = "^[\\p{L} .'-]+$", message = "Name should contain only letters and such symbols as '.-")
     private String name;
+    @NotEmpty(message = "Surname cannot be empty")
+    @Size(min = 2, max = 15, message = "Surname length should be between 2 to 20")
+    @Pattern(regexp = "^[\\p{L} .'-]+$", message = "Surname should contain only letters and such symbols as '.-")
     private String surname;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Birthday should be chosen")
+    @Past(message = "Birthday should be in past")
     private Date birthday;
+    @NotEmpty(message = "Password cannot be empty")
+    @Size(min = 4, max = 15, message = "Password length should be between 4 to 15")
     private String password;
+    @NotEmpty(message = "Email cannot be empty")
+    @Email(message = "Email should be correct")
     private String email;
 
     public MedicalStaff() {

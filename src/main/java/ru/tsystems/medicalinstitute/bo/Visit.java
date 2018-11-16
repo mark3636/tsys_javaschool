@@ -43,13 +43,6 @@ public class Visit {
         this.id = id;
     }
 
-    public Date getBeginningDate() {
-        return beginningTime;
-    }
-    public void setBeginningDate(Date beginningDate) {
-        this.beginningTime = beginningDate;
-    }
-
     public Date getVisitDate() {
         return visitDate;
     }
