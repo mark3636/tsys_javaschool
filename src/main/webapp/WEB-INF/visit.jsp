@@ -7,6 +7,7 @@
     <title>New visit</title>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/> ">
     <link rel="stylesheet" href="<c:url value="/resources/css/classic.css"/> ">
+    <link rel="stylesheet" href="<c:url value="/resources/css/jquery.timepicker.css"/> ">
 </head>
 <body>
 <div class="container">
@@ -24,51 +25,28 @@
 
         <div class="form-group">
             <label for="visitDate">Visit date</label>
-            <input class="form-control" type="date" id="visitDate" name="visitDate" value="${visit.visitDate}">
+            <input class="form-control" type="date" id="visitDate" name="visitDate" value="${visit.visitDate}" onchange="getBeginningTime(${patient.id})">
         </div>
 
         <div class="form-group">
             <label for="beginningTime">Beginning time</label>
-            <input class="form-control" min="9:00" max="16:50" type="time" id="beginningTime" name="beginningTime"
-                   value="${visit.visitDate}">
+            <input class="form-control" id="beginningTime" type="text" name="beginningTime" disabled onchange="getEndingTime(${patient.id})"/>
         </div>
 
         <div class="form-group">
             <label for="endingTime">Ending time</label>
-            <input class="form-control" min="9:10" max="17:00" type="time" id="endingTime" name="endingTime"
-                   value="${visit.visitDate}">
+            <input class="form-control" id="endingTime" name="endingTime" disabled type="text" onchange="readyForSubmit()"/>
         </div>
 
-        <input class="btn btn-primary" type="submit" value="Add visit">
+        <input id="submitBtn" class="btn btn-primary" type="submit" value="Add visit" disabled>
     </form>
 
     <a href="/patient-details/${patient.id}">Back</a>
 
     <script type="text/javascript" src="<c:url value="/resources/javascript/jquery-1.10.2.min.js"/> "></script>
     <script type="text/javascript" src="<c:url value="/resources/javascript/jquery-ui.min.js"/> "></script>
-    <script type="text/javascript" src="<c:url value="/resources/javascript/jquery.mousewheel.min.js"/> "></script>
-    <script type="text/javascript" src="<c:url value="/resources/javascript/jQAllRangeSliders-min.js"/> "></script>
-    <script>
-        $("#slider").rangeSlider(
-            {
-                bounds: {
-                    min: 540,
-                    max: 780
-                },
-                formatter: function (val) {
-                    var hours = Math.floor(val / 60)
-                    var minutes = Math.floor(val % 60)
-
-                    return hours + ":" + minutes.toLocaleString(undefined, {minimumIntegerDigits: 2})
-                },
-                step: 10,
-                range: {
-                    min: 10,
-                    max: 30
-                }
-            }
-        );
-    </script>
+    <script type="text/javascript" src="<c:url value="/resources/javascript/jquery.timepicker.js"/> "></script>
+    <script type="text/javascript" src="<c:url value="/resources/javascript/utils.js"/> "></script>
 </div>
 </body>
 </html>
