@@ -1,7 +1,6 @@
 package ru.tsystems.medicalinstitute.service.impl;
 
 import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -21,12 +20,14 @@ import java.util.List;
 @Service
 @Transactional
 public class MedicalStaffServiceImpl implements MedicalStaffService {
-    @Autowired
-    private MedicalStaffDAO medicalStaffDAO;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
+    private final MedicalStaffDAO medicalStaffDAO;
+    private final PasswordEncoder passwordEncoder;
     private MedicalStaffMapper mapper = Mappers.getMapper(MedicalStaffMapper.class);
+
+    public MedicalStaffServiceImpl(final MedicalStaffDAO medicalStaffDAO, final PasswordEncoder passwordEncoder) {
+        this.medicalStaffDAO = medicalStaffDAO;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public List<MedicalStaff> listMedicalStaff() {

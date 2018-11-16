@@ -1,7 +1,6 @@
 package ru.tsystems.medicalinstitute.service.impl;
 
 import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.medicalinstitute.bo.CaseStatus;
@@ -12,10 +11,12 @@ import ru.tsystems.medicalinstitute.service.CaseStatusService;
 @Service
 @Transactional
 public class CaseStatusServiceImpl implements CaseStatusService {
-    @Autowired
-    private CaseStatusDAO caseStatusDAO;
-    CaseStatusMapper mapper = Mappers.getMapper(CaseStatusMapper.class);
+    private final CaseStatusDAO caseStatusDAO;
+    private CaseStatusMapper mapper = Mappers.getMapper(CaseStatusMapper.class);
 
+    public CaseStatusServiceImpl(final CaseStatusDAO caseStatusDAO) {
+        this.caseStatusDAO = caseStatusDAO;
+    }
 
     @Override
     public CaseStatus getByName(String name) {

@@ -1,7 +1,6 @@
 package ru.tsystems.medicalinstitute.service.impl;
 
 import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.medicalinstitute.bo.PdfFile;
@@ -14,9 +13,12 @@ import java.util.List;
 @Service
 @Transactional
 public class PdfFileServiceImpl implements PdfFileService {
-    @Autowired
-    private PdfFileDAO pdfFileDAO;
+    private final PdfFileDAO pdfFileDAO;
     private PdfFileMapper mapper = Mappers.getMapper(PdfFileMapper.class);
+
+    public PdfFileServiceImpl(final PdfFileDAO pdfFileDAO) {
+        this.pdfFileDAO = pdfFileDAO;
+    }
 
     @Override
     public void add(PdfFile bo) {

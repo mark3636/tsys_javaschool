@@ -9,8 +9,11 @@ import ru.tsystems.medicalinstitute.service.MedicalStaffService;
 
 @Controller
 public class MedicalStaffController {
-    @Autowired
-    MedicalStaffService medicalStaffService;
+    private final MedicalStaffService medicalStaffService;
+
+    public MedicalStaffController(final MedicalStaffService medicalStaffService) {
+        this.medicalStaffService = medicalStaffService;
+    }
 
     @RequestMapping(value = "/medical-staff", method = RequestMethod.GET)
     public String listMedicalStaff(Model model) {

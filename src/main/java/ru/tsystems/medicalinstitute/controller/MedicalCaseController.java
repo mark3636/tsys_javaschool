@@ -1,6 +1,5 @@
 package ru.tsystems.medicalinstitute.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -19,18 +18,23 @@ import java.util.Date;
 
 @Controller
 public class MedicalCaseController {
-    @Autowired
-    CaseStatusService caseStatusService;
-    @Autowired
-    MedicalCaseService medicalCaseService;
-    @Autowired
-    PatientService patientService;
-    @Autowired
-    MedicalStaffService medicalStaffService;
-    @Autowired
-    PdfFileService pdfFileService;
-    @Autowired
-    DiagnosisService diagnosisService;
+    private final CaseStatusService caseStatusService;
+    private final MedicalCaseService medicalCaseService;
+    private final PatientService patientService;
+    private final  MedicalStaffService medicalStaffService;
+    private final PdfFileService pdfFileService;
+    private final  DiagnosisService diagnosisService;
+
+    public MedicalCaseController(final CaseStatusService caseStatusService, final MedicalCaseService medicalCaseService,
+                                 final PatientService patientService, final MedicalStaffService medicalStaffService,
+                                 final PdfFileService pdfFileService, final DiagnosisService diagnosisService) {
+        this.caseStatusService = caseStatusService;
+        this.medicalCaseService = medicalCaseService;
+        this.patientService = patientService;
+        this.medicalStaffService = medicalStaffService;
+        this.pdfFileService = pdfFileService;
+        this.diagnosisService = diagnosisService;
+    }
 
     @RequestMapping(value = "/patient-details/{patientId}/new-medical-case", method = RequestMethod.GET)
     public String newMedicalCase(@PathVariable("patientId") int patientId, Model model) {
