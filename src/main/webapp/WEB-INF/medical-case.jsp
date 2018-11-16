@@ -28,7 +28,7 @@
             <ul>
             <c:forEach items="${diagnoses}" var="diagnosis">
                 <li>
-                    Name :${diagnosis.name}, date: ${diagnosis.diagnosisDate} |  <a href="/medical-case/${medicalCase.id}/diagnosis-details/${diagnosis.id}">Details</a> | <a href="/medical-case/${medicalCase.id}/diagnosis/${diagnosis.id}">Edit</a>
+                    Name: ${diagnosis.name}, date: ${diagnosis.diagnosisDate} | <a href="/medical-case/${medicalCase.id}/diagnosis-details/${diagnosis.id}">Details</a> | <a href="/medical-case/${medicalCase.id}/diagnosis/${diagnosis.id}">Edit</a>
                 </li>
             </c:forEach>
             </ul>
