@@ -23,27 +23,37 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(@RequestParam(value = "error", required = false) String error, Model model) {
-        if(error != null) {
+        if (error != null) {
             model.addAttribute("error", "Wrong email or password");
         }
         return "login";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String showRegistrationForm(Model model) {
+    public String showRegistrationForm(@RequestParam(value = "error", required = false) String error, Model model) {
         MedicalStaff medicalStaff = new MedicalStaff();
         model.addAttribute("medicalStaff", medicalStaff);
+
+        if (error != null) {
+            model.addAttribute("error", "User with such email already exists");
+        }
 
         return "registration";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String register(@ModelAttribute("medicalStaff") @Valid MedicalStaff medicalStaff, BindingResult result, Model model) {
+    public String register(
+            @ModelAttribute("medicalStaff") @Valid MedicalStaff medicalStaff,
+            BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "registration";
         }
 
-        //TODO: add email unique checking
+        if (medicalStaffService.findByEmail(medicalStaff.getEmail()) != null) {
+            model.addAttribute("error", "User with such email already exists");
+            medicalStaff.setPassword(null);
+            return "registration";
+        }
 
         medicalStaffService.add(medicalStaff);
 

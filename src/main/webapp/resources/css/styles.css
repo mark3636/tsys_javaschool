@@ -43,3 +43,8 @@ input[type="password"] {
     color: red;
     font-size: small;
 }
+
+.big-error {
+    color: red;
+    font-size: large;
+}
