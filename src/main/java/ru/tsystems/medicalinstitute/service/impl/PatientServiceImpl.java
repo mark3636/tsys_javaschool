@@ -59,35 +59,9 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public List<Patient> filterPatients(String surname, String birthday, String medicalCaseNumber) throws ParseException {
-        List<Patient> patients = listPatients();
-        if (surname != null && !surname.isEmpty()) {
-            patients = patients.stream()
-                    .filter(patient -> patient.getSurname().toLowerCase().contains(surname)).collect(Collectors.toList());
-        }
-
-        if (birthday != null && !birthday.isEmpty()) {
-            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(birthday);
-            patients = patients.stream()
-                    .filter(patient -> patient.getBirthday().equals(date)).collect(Collectors.toList());
-        }
-
-        List<MedicalCase> medicalCases = medicalCaseService.listMedicalCases();
-
-        if (medicalCaseNumber != null && !medicalCaseNumber.isEmpty()) {
-            medicalCases = medicalCases.stream()
-                    .filter(medicalCase -> medicalCase.getNumber().toLowerCase().contains(medicalCaseNumber)).collect(Collectors.toList());
-
-            if (medicalCases.isEmpty()) {
-                patients = new ArrayList<>();
-            }
-
-            for (MedicalCase medicalCase : medicalCases) {
-                patients = patients.stream()
-                        .filter(patient -> patient.getId() == medicalCase.getPatient().getId()).collect(Collectors.toList());
-            }
-        }
-
-        return patients;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return mapper.toBos(patientDAO.filterPatients(surname,
+                birthday.isEmpty() ? null : simpleDateFormat.parse(birthday), medicalCaseNumber));
     }
 
     @Override

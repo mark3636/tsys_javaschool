@@ -16,13 +16,20 @@ public class PatientDAOImpl extends AbstractDAOImpl<PatientEntity> implements Pa
         return getSession().createQuery("from PatientEntity").list();
     }
 
-    //???
+    @SuppressWarnings("unchecked")
     @Override
     public List<PatientEntity> filterPatients(String surname, Date birthday, String medicalCaseNumber) {
-//        Query query = getSession().createQuery("from PatientEntity as pe inner join MedicalCaseEntity as mce on pe.id = mce.patient.id" +
-//                " where pe.surname like %:surname% and pe.birthday is null " +
-//                "")
-        return null;
+        Query query = getSession().createQuery(
+                "select distinct pe " +
+                        "from PatientEntity as pe inner join MedicalCaseEntity as mce" +
+                        " on pe.id = mce.patient.id" +
+                        " where upper(pe.surname) like upper(concat('%', :surname, '%'))" +
+                        " and upper(mce.number) like upper(concat('%', :medicalCaseNumber, '%'))" +
+                        " and (:birthday is null or :birthday = pe.birthday)");
+        query.setParameter("surname", surname);
+        query.setParameter("medicalCaseNumber", medicalCaseNumber);
+        query.setParameter("birthday", birthday);
+        return query.list();
     }
 
     @Override
