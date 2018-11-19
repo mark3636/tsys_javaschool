@@ -1,5 +1,6 @@
 package ru.tsystems.medicalinstitute.service.impl;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +12,7 @@ import ru.tsystems.medicalinstitute.service.VisitService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -19,6 +21,8 @@ public class VisitServiceImpl implements VisitService {
     private final VisitDAO visitDAO;
 
     private VisitMapper mapper = Mappers.getMapper(VisitMapper.class);
+    private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public VisitServiceImpl(final VisitDAO visitDAO) {
         this.visitDAO = visitDAO;
@@ -36,8 +40,57 @@ public class VisitServiceImpl implements VisitService {
 
     @Override
     public List<Visit> getByMedicalStaffAndVisitDate(int medicalStaffId, String visitDate) throws ParseException {
-        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(visitDate);
+        Date date = dateFormat.parse(visitDate);
         return mapper.toBos(visitDAO.getByMedicalStaffAndVisitDate(medicalStaffId, date));
+    }
+
+    @Override
+    public List<String> getExistedTime(int medicalStaffId, String visitDate) throws ParseException {
+        List<Visit> existedVisits;
+        List<String> existedTime = null;
+
+        if (visitDate != null) {
+            existedVisits = getByMedicalStaffAndVisitDate(medicalStaffId, visitDate);
+            if (!existedVisits.isEmpty()) {
+                existedTime = new LinkedList<>();
+                for (Visit visit : existedVisits) {
+                    existedTime.add(timeFormat.format(visit.getBeginningTime()));
+                    existedTime.add(timeFormat.format(visit.getEndingTime()));
+                }
+            }
+        }
+
+        return existedTime;
+    }
+
+    @Override
+    public List<String> getEndingTime(int medicalStaffId, String visitDate, String beginningTime) throws ParseException {
+        List<Visit> existedVisits;
+        List<String> timeBorder = new LinkedList<>();
+
+        Date minTime = DateUtils.addMinutes(timeFormat.parse(beginningTime), 15);
+        Date maxTime = DateUtils.addMinutes(timeFormat.parse(beginningTime), 60);
+
+        if (visitDate != null) {
+            existedVisits = getByMedicalStaffAndVisitDate(medicalStaffId, visitDate);
+            if (!existedVisits.isEmpty()) {
+                for (Visit visit : existedVisits) {
+                    if((visit.getBeginningTime().after(minTime) || visit.getBeginningTime().equals(minTime))
+                            && (visit.getBeginningTime().before(maxTime) || visit.getBeginningTime().equals(maxTime))) {
+                        maxTime = visit.getBeginningTime();
+                    }
+                }
+            }
+        }
+
+        if (maxTime.after(timeFormat.parse("16:00"))) {
+            maxTime = timeFormat.parse("16:00");
+        }
+
+        timeBorder.add(timeFormat.format(minTime));
+        timeBorder.add(timeFormat.format(maxTime));
+
+        return timeBorder;
     }
 
     @Override

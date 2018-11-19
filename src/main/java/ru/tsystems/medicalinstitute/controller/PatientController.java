@@ -1,6 +1,5 @@
 package ru.tsystems.medicalinstitute.controller;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -16,9 +15,6 @@ import ru.tsystems.medicalinstitute.service.VisitService;
 
 import javax.validation.Valid;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 @Controller
@@ -27,8 +23,6 @@ public class PatientController {
     private final MedicalCaseService medicalCaseService;
     private final VisitService visitService;
     private final MedicalStaffService medicalStaffService;
-
-    private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
     public PatientController(final PatientService patientService, final MedicalCaseService medicalCaseService,
                              final VisitService visitService, final MedicalStaffService medicalStaffService) {
@@ -87,24 +81,10 @@ public class PatientController {
 
     @RequestMapping(value = "/patient-details/{patientId}/new-visit-beginning-time", method = RequestMethod.GET)
     public @ResponseBody
-    List<String> getExistedTimes(
+    List<String> getExistedTime(
             @RequestParam(value = "medicalStaff", required = false) String medicalStaff,
             @RequestParam(value = "visitDate", required = false) String visitDate) throws ParseException {
-        List<Visit> existedVisits;
-        List<String> existedTimes = null;
-
-        if (visitDate != null) {
-            existedVisits = visitService.getByMedicalStaffAndVisitDate(Integer.parseInt(medicalStaff), visitDate);
-            if (!existedVisits.isEmpty()) {
-                existedTimes = new LinkedList<>();
-                for (Visit visit : existedVisits) {
-                    existedTimes.add(timeFormat.format(visit.getBeginningTime()));
-                    existedTimes.add(timeFormat.format(visit.getEndingTime()));
-                }
-            }
-        }
-
-        return existedTimes;
+        return visitService.getExistedTime(Integer.parseInt(medicalStaff), visitDate);
     }
 
     @RequestMapping(value = "/patient-details/{patientId}/new-visit-ending-time", method = RequestMethod.GET)
@@ -113,32 +93,7 @@ public class PatientController {
             @RequestParam(value = "medicalStaff", required = false) String medicalStaff,
             @RequestParam(value = "visitDate", required = false) String visitDate,
             @RequestParam(value = "beginningTime", required = false) String beginningTime) throws ParseException {
-        List<Visit> existedVisits;
-        List<String> existedTimes = new LinkedList<>();
-
-        Date minimumTime = DateUtils.addMinutes(timeFormat.parse(beginningTime), 15);
-        Date maximumTime = DateUtils.addMinutes(timeFormat.parse(beginningTime), 60);
-
-        if (visitDate != null) {
-            existedVisits = visitService.getByMedicalStaffAndVisitDate(Integer.parseInt(medicalStaff), visitDate);
-            if (!existedVisits.isEmpty()) {
-                for (Visit visit : existedVisits) {
-                    if((visit.getBeginningTime().after(minimumTime) || visit.getBeginningTime().equals(minimumTime))
-                            && (visit.getBeginningTime().before(maximumTime) || visit.getBeginningTime().equals(maximumTime))) {
-                        maximumTime = visit.getBeginningTime();
-                    }
-                }
-            }
-        }
-
-        if (maximumTime.after(timeFormat.parse("16:00"))) {
-            maximumTime = timeFormat.parse("16:00");
-        }
-
-        existedTimes.add(timeFormat.format(minimumTime));
-        existedTimes.add(timeFormat.format(maximumTime));
-
-        return existedTimes;
+        return visitService.getEndingTime(Integer.parseInt(medicalStaff), visitDate, beginningTime);
     }
 
     @RequestMapping(value = "/patient-details/{patientId}/new-visit", method = RequestMethod.POST)
