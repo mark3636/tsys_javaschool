@@ -10,7 +10,7 @@
 <body>
 <div class="container">
     <c:import url="navbar.jsp"/>
-    <h3>Diagnosis:</h3>
+    <h4>Diagnosis:</h4>
     <div>Name: ${diagnosis.name}</div>
     <div>Diagnosis date: ${diagnosis.diagnosisDate}</div>
     <div>Medical staff: ${diagnosis.medicalStaff.name} ${diagnosis.medicalStaff.surname}</div>

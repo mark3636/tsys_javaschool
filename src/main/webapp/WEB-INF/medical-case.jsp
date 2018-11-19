@@ -15,7 +15,7 @@
     <div>Beginning date: ${medicalCase.beginningDate}</div>
     <div>Ending date:
         <c:if test="${not empty medicalCase.endingDate}">${medicalCase.endingDate}</c:if>
-        <c:if test="${empty medicalCase.endingDate}">Undefined</c:if>
+        <c:if test="${empty medicalCase.endingDate}">In progress</c:if>
     </div>
     <div>Case status: ${medicalCase.caseStatus.name}</div>
     <div>Patient's ssn: ${medicalCase.patient.socialSecurityNumber}</div>

@@ -11,19 +11,18 @@
 <body>
 <div class="container">
     <c:import url="navbar.jsp"/>
-    <h3>Patient:</h3>
+    <h4>Patient:</h4>
     <div>
         <a href="<c:url value="/patient-details/${patient.id}/new-visit"/> ">New visit</a> |
         <a href="<c:url value="/patient-details/${patient.id}/new-medical-case"/> ">Add medical case</a>
     </div>
     <div>Social security number: ${patient.socialSecurityNumber}</div>
-    <div>Name: ${patient.name}</div>
-    <div>Surname: ${patient.surname}</div>
+    <div>Full name: ${patient.name} ${patient.surname}</div>
     <div>Birthday: ${patient.birthday}</div>
-    <div>Passport details: ${patient.passportDetails}</div>
-    <div>Address: ${patient.address}</div>
     <div>Email: ${patient.email}</div>
     <div>Phone number: ${patient.phoneNumber}</div>
+    <div>Address: ${patient.address}</div>
+    <div>Passport details: ${patient.passportDetails}</div>
     <div>Patient status: ${patientStatus}</div>
     <c:if test="${not empty patient.comment}">
         <div>Comment: ${patient.comment}</div>

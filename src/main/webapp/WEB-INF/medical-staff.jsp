@@ -10,7 +10,7 @@
 <body>
 <div class="container">
     <c:import url="navbar.jsp"/>
-    <h3>Medical staff list</h3>
+    <h4>Medical staff</h4>
     <c:if test="${!empty listMedicalStaff}">
         <table class="table table-striped">
             <tr>
