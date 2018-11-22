@@ -12,7 +12,8 @@
     padding: 35px 35px 25px;
     margin: 0 auto;
     background-color: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 }
 
 .form-signin-heading {
@@ -33,7 +34,6 @@
 
 .error {
     color: red;
-    font-size: small;
 }
 
 .big-error {
