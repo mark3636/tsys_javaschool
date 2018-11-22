@@ -72,7 +72,7 @@ function getEndingTime(patientId) {
     submitBtn.attr('disabled', 'disabled');
 
 
-    if (medicalStaff.val() && visitDate.val() && beginningTime.val()) {
+    if (medicalStaff.val() && visitDate.val() && beginningTime.val() && $("#visit").valid()) {
         endingTime.removeAttr('disabled');
 
         $.ajax({
@@ -107,7 +107,7 @@ function readyForSubmit() {
 
     var submitBtn = $('#submitBtn');
 
-    if (medicalStaff && visitDate && beginningTime && endingTime) {
+    if (medicalStaff && visitDate && beginningTime && endingTime && $("#visit").valid()) {
         submitBtn.removeAttr('disabled');
     }
     else {
