@@ -12,11 +12,11 @@
 <div class="container">
     <c:import url="navbar.jsp"/>
 
-    <form action="/patient-details/${patient.id}/new-medical-case" method="post">
+    <form action="/patient-details/${patient.id}/new-medical-case" method="post" id="medicalCase">
 
         <div class="form-group">
             <label for="number">Number</label>
-            <input class="form-control" type="text" id="number" name="number" placeholder="number"
+            <input class="form-control" type="text" id="number" name="number" placeholder="Number"
                    value="${medicalCase.number}"/>
         </div>
 
@@ -32,10 +32,15 @@
         <div>
             <input class="btn btn-primary" type="submit"
                    value="<spring:message text="Add"/>"/>
+            <a href="/patient-details/${patient.id}">Back</a>
         </div>
     </form>
-
-    <a href="/patient-details/${patient.id}">Back</a>
 </div>
+
+<script type="text/javascript" src="<c:url value="/resources/javascript/jquery.js"/> "></script>
+<script type="text/javascript" src="<c:url value="/resources/javascript/jquery-ui.js"/> "></script>
+<script type="text/javascript" src="<c:url value="/resources/javascript/jquery.validate.min.js"/> "></script>
+<script type="text/javascript" src="<c:url value="/resources/javascript/medical-case.js"/> "></script>
+
 </body>
 </html>

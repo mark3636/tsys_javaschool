@@ -11,6 +11,7 @@
 <div class="container">
     <c:import url="navbar.jsp"/>
 
+    <h4>Medical case</h4>
     <div>Number: ${medicalCase.number}</div>
     <div>Beginning date: ${medicalCase.beginningDate}</div>
     <div>Ending date:
