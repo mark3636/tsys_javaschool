@@ -11,7 +11,7 @@ import java.util.Objects;
 public class MedicalCase {
     private int id;
     @NotEmpty(message = "Number cannot be empty")
-    @Size(min = 10, max = 10, message = "Name length should be equals to 10")
+    @Size(min = 10, max = 10, message = "Name length should be equal to 10")
     private String number;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date beginningDate;
