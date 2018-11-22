@@ -9,6 +9,7 @@
         <property name="connection.username">root</property>
         <property name="connection.password">admin</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.show_sql">true</property>
         <property name="hibernate.enable_lazy_load_no_trans">true</property>
         <mapping class="ru.tsystems.medicalinstitute.model.CaseStatusEntity"/>
         <mapping class="ru.tsystems.medicalinstitute.model.VisitEntity"/>
