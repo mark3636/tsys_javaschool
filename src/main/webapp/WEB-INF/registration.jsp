@@ -12,31 +12,36 @@
 <div class="container">
     <div class="wrapper">
         <h4>Registration</h4>
-        <form:form action="/registration" method="post" modelAttribute="medicalStaff">
+        <form:form action="/registration" method="post" modelAttribute="medicalStaff" id="registration">
             <c:if test="${not empty error}">
                 <p class="big-error">${error}</p>
             </c:if>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input class="form-control" type="email" name="email" id="email" placeholder="email"
-                       value="${medicalStaff.email}">
+                <input class="form-control" type="email" name="email" id="email" placeholder="Email"
+                       value="${medicalStaff.email}"/>
                 <form:errors path="email" cssClass="error"/>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input class="form-control" type="password" name="password" id="password" placeholder="password"
-                       value="${medicalStaff.password}">
+                <input class="form-control" type="password" name="password" id="password" placeholder="Password"
+                       value="${medicalStaff.password}"/>
                 <form:errors path="password" cssClass="error"/>
             </div>
             <div class="form-group">
+                <label for="password_confirmation">Password confirmation</label>
+                <input class="form-control" type="password" name="password_confirmation" id="password_confirmation"
+                       placeholder="Password confirmation"/>
+            </div>
+            <div class="form-group">
                 <label for="name">Name</label>
-                <input class="form-control" type="text" name="name" id="name" placeholder="name"
+                <input class="form-control" type="text" name="name" id="name" placeholder="Name"
                        value="${medicalStaff.name}"/>
                 <form:errors path="name" cssClass="error"/>
             </div>
             <div class="form-group">
                 <label for="surname">Surname</label>
-                <input class="form-control" type="text" id="surname" name="surname" placeholder="surname"
+                <input class="form-control" type="text" id="surname" name="surname" placeholder="Surname"
                        value="${medicalStaff.surname}">
                 <form:errors path="surname" cssClass="error"/>
             </div>
@@ -44,7 +49,7 @@
                 <label for="birthday">Birthday</label>
                 <spring:bind path="birthday">
                     <input id="birthday" class="form-control" type="date" value="${status.value}"
-                           name="${status.expression}">
+                           name="${status.expression}"/>
                     <c:if test="${status.error}">
                         <c:forEach items="${status.errorMessages}" var="error">
                             <span class="error"><c:out value="${error}"/></span>
@@ -52,12 +57,6 @@
                     </c:if>
                 </spring:bind>
             </div>
-            <%--<div class="form-group">--%>
-            <%--<label for="email">Password confirmation</label>--%>
-            <%--<input class="form-control" type="email" name="email" id="email" placeholder="email"--%>
-            <%--value="${medicalStaff.email}">--%>
-            <%--<form:errors path="email" cssClass="error"/>--%>
-            <%--</div>--%>
             <div>
                 <input class="btn btn-primary" type="submit"
                        value="<spring:message text="Register"/>"/>
@@ -66,6 +65,12 @@
         </form:form>
     </div>
 </div>
+
+<script type="text/javascript" src="<c:url value="/resources/javascript/jquery.js"/> "></script>
+<script type="text/javascript" src="<c:url value="/resources/javascript/jquery-ui.min.js"/> "></script>
+<script type="text/javascript" src="<c:url value="/resources/javascript/jquery.validate.min.js"/> "></script>
+<script type="text/javascript" src="<c:url value="/resources/javascript/registration.js"/> "></script>
+
 </body>
 </html>
 
