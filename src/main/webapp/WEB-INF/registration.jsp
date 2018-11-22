@@ -4,9 +4,10 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Register</title>
+    <title>Registration</title>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/> ">
     <link rel="stylesheet" href="<c:url value="/resources/css/styles.css"/> ">
+    <link rel="stylesheet" href="<c:url value="/resources/css/jquery-ui.css"/> ">
 </head>
 <body>
 <div class="container">
@@ -48,8 +49,8 @@
             <div class="form-group">
                 <label for="birthday">Birthday</label>
                 <spring:bind path="birthday">
-                    <input id="birthday" class="form-control" type="date" value="${status.value}"
-                           name="${status.expression}"/>
+                    <input id="birthday" class="form-control" type="text" placeholder="Birthday" value="${status.value}"
+                           name="${status.expression}" readonly="readonly" style="background-color: white"/>
                     <c:if test="${status.error}">
                         <c:forEach items="${status.errorMessages}" var="error">
                             <span class="error"><c:out value="${error}"/></span>
@@ -67,7 +68,7 @@
 </div>
 
 <script type="text/javascript" src="<c:url value="/resources/javascript/jquery.js"/> "></script>
-<script type="text/javascript" src="<c:url value="/resources/javascript/jquery-ui.min.js"/> "></script>
+<script type="text/javascript" src="<c:url value="/resources/javascript/jquery-ui.js"/> "></script>
 <script type="text/javascript" src="<c:url value="/resources/javascript/jquery.validate.min.js"/> "></script>
 <script type="text/javascript" src="<c:url value="/resources/javascript/registration.js"/> "></script>
 
