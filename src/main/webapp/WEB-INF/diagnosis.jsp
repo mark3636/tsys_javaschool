@@ -6,11 +6,12 @@
 <head>
     <title>Diagnosis</title>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/> ">
+    <link rel="stylesheet" href="<c:url value="/resources/css/styles.css"/> ">
 </head>
 <body>
 <div class="container">
     <c:import url="navbar.jsp"/>
-    <form action="/medical-case/${medicalCase.id}/diagnosis" method="post">
+    <form action="/medical-case/${medicalCase.id}/diagnosis" method="post" id="diagnosis">
         <c:if test="${diagnosis.id != 0}">
         <div>
             <input class="form-control" type="hidden" name="id" placeholder="name" value="${diagnosis.id}"/>
@@ -37,5 +38,11 @@
             <a href="/medical-case/${medicalCase.id}">Back</a>
         </div>
 </div>
+
+<script type="text/javascript" src="<c:url value="/resources/javascript/jquery.js"/> "></script>
+<script type="text/javascript" src="<c:url value="/resources/javascript/jquery-ui.min.js"/> "></script>
+<script type="text/javascript" src="<c:url value="/resources/javascript/jquery.validate.min.js"/> "></script>
+<script type="text/javascript" src="<c:url value="/resources/javascript/diagnosis.js"/> "></script>
+
 </body>
 </html>
