@@ -43,7 +43,7 @@
 
     <a href="/patient-details/${patient.id}">Back</a>
 
-    <script type="text/javascript" src="<c:url value="/resources/javascript/jquery-1.10.2.min.js"/> "></script>
+    <script type="text/javascript" src="<c:url value="/resources/javascript/jquery.js"/> "></script>
     <script type="text/javascript" src="<c:url value="/resources/javascript/jquery-ui.min.js"/> "></script>
     <script type="text/javascript" src="<c:url value="/resources/javascript/jquery.timepicker.js"/> "></script>
     <script type="text/javascript" src="<c:url value="/resources/javascript/utils.js"/> "></script>

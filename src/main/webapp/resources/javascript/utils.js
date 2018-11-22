@@ -67,12 +67,10 @@ function getEndingTime(patientId) {
 
     var submitBtn = $('#submitBtn');
 
+    endingTime.val(undefined);
+    endingTime.timepicker('remove');
+    submitBtn.attr('disabled', 'disabled');
 
-    if (endingTime.val()) {
-        endingTime.val(undefined);
-        endingTime.timepicker('remove');
-        submitBtn.attr('disabled', 'disabled');
-    }
 
     if (medicalStaff.val() && visitDate.val() && beginningTime.val()) {
         endingTime.removeAttr('disabled');
