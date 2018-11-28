@@ -18,5 +18,7 @@
         <mapping class="ru.tsystems.medicalinstitute.model.MedicalStaffEntity"/>
         <mapping class="ru.tsystems.medicalinstitute.model.MedicalCaseEntity"/>
         <mapping class="ru.tsystems.medicalinstitute.model.PatientEntity"/>
+        <mapping class="ru.tsystems.medicalinstitute.model.ProcedureStatusEntity"/>
+        <mapping class="ru.tsystems.medicalinstitute.model.MedicalProcedureEntity"/>
     </session-factory>
 </hibernate-configuration>
