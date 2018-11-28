@@ -22,41 +22,73 @@
     <div>Patient's ssn: ${medicalCase.patient.socialSecurityNumber}</div>
     <div>Medical staff: Dr. ${medicalCase.medicalStaff.name} ${medicalCase.medicalStaff.surname}</div>
 
-    <a href="/medical-case/${medicalCase.id}/diagnosis" class="btn btn-primary mb-2">New diagnosis</a>
-
-    <c:if test="${not empty diagnoses}">
-        <div>Diagnoses:</div>
+    <div>
+        <c:if test="${not empty medicalProcedures}">
+            <div>Medical procedures:</div>
             <ul>
-            <c:forEach items="${diagnoses}" var="diagnosis">
-                <li>
-                    Name: ${diagnosis.name}, date: ${diagnosis.diagnosisDate} | <a href="/medical-case/${medicalCase.id}/diagnosis-details/${diagnosis.id}">Details</a> | <a href="/medical-case/${medicalCase.id}/diagnosis/${diagnosis.id}">Edit</a>
-                </li>
-            </c:forEach>
+                <c:forEach items="${medicalProcedures}" var="medicalProcedure">
+                    <li>
+                        Name: ${medicalProcedure.name} | <a
+                            href="/procedure-details/${medicalProcedure.id}">Details</a>
+                    </li>
+                </c:forEach>
             </ul>
-    </c:if>
+        </c:if>
 
-    <div><c:if test="${empty diagnoses}">No diagnoses</c:if></div>
+        <div><c:if test="${empty medicalProcedures}">Medical procedures: no</c:if></div>
 
-    <form method="post" action="/medical-case/${medicalCase.id}/upload" enctype="multipart/form-data">
-        <div class="form-group">
-            <input class="form-control-file" type="file" name="file" id="file"/>
-            <input class="mt-2 btn btn-primary" type="submit" value="Add document"/>
-        </div>
-    </form>
+        <c:if test="${medicalCase.caseStatus.name eq 'OPENED'}">
+            <a href="/medical-case/${medicalCase.id}/medical-procedure" class="btn btn-primary mb-2">New medical
+                procedure</a>
+        </c:if>
+    </div>
 
-    <c:if test="${not empty pdfFiles}">
-        <div>Attachments:</div>
+    <div>
+        <c:if test="${not empty diagnoses}">
+            <div>Diagnoses:</div>
             <ul>
-            <c:forEach items="${pdfFiles}" var="pdfFile">
-                <li>
-                    ${pdfFile.name} | <a href="/medical-case/${medicalCase.id}/pdf-file/${pdfFile.id}/download">Download</a> |
-                    <a href="/medical-case/${medicalCase.id}/pdf-file/${pdfFile.id}/delete">Delete</a>
-                </li>
-            </c:forEach>
+                <c:forEach items="${diagnoses}" var="diagnosis">
+                    <li>
+                        Name: ${diagnosis.name}, date: ${diagnosis.diagnosisDate} | <a
+                            href="/medical-case/${medicalCase.id}/diagnosis-details/${diagnosis.id}">Details</a> | <a
+                            href="/medical-case/${medicalCase.id}/diagnosis/${diagnosis.id}">Edit</a>
+                    </li>
+                </c:forEach>
             </ul>
-    </c:if>
+        </c:if>
 
-    <c:if test="${empty pdfFiles}">No attachments</c:if>
+        <div><c:if test="${empty diagnoses}">Diagnoses: no</c:if></div>
+
+        <c:if test="${medicalCase.caseStatus.name eq 'OPENED'}">
+            <a href="/medical-case/${medicalCase.id}/diagnosis" class="btn btn-primary mb-2">New diagnosis</a>
+        </c:if>
+    </div>
+
+    <div>
+        <c:if test="${empty pdfFiles}">Attachments: no</c:if>
+
+        <c:if test="${not empty pdfFiles}">
+            <div>Attachments:</div>
+            <ul>
+                <c:forEach items="${pdfFiles}" var="pdfFile">
+                    <li>
+                            ${pdfFile.name}
+                        | <a href="/medical-case/${medicalCase.id}/pdf-file/${pdfFile.id}/download">Download</a>
+                        | <a href="/medical-case/${medicalCase.id}/pdf-file/${pdfFile.id}/delete">Delete</a>
+                    </li>
+                </c:forEach>
+            </ul>
+        </c:if>
+
+        <c:if test="${medicalCase.caseStatus.name eq 'OPENED'}">
+            <form method="post" action="/medical-case/${medicalCase.id}/upload" enctype="multipart/form-data">
+                <div class="form-group">
+                    <input class="form-control-file" type="file" name="file" id="file"/>
+                    <input class="mt-2 btn btn-primary" type="submit" value="Add attachment"/>
+                </div>
+            </form>
+        </c:if>
+    </div>
 </div>
 </body>
 </html>

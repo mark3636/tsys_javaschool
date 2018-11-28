@@ -34,7 +34,7 @@
                     <td><a href="<c:url value='/medical-case/${medicalCase.id}' />">Details</a></td>
                     <c:if test="${medicalCase.caseStatus.name eq 'OPENED'}">
                         <td><a href="<c:url value='/medical-case/${medicalCase.id}/complete' />">Complete</a></td>
-                        <td><a href="<c:url value='/medical-case/${medicalCase.id}/cancel' />">Cancel</a></td>
+                        <td><a href="#" onclick="cancelMedicalCase(${medicalCase.id})">Cancel</a></td>
                     </c:if>
                     <c:if test="${not(medicalCase.caseStatus.name eq 'OPENED')}">
                         <td>-</td>
@@ -45,5 +45,9 @@
         </table>
     </c:if>
 </div>
+
+<script type="text/javascript" src="<c:url value="/resources/javascript/jquery.js"/> "></script>
+<script type="text/javascript" src="<c:url value="/resources/javascript/utils.js"/> "></script>
+
 </body>
 </html>
