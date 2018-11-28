@@ -17,7 +17,30 @@ CREATE TABLE IF NOT EXISTS Medical_case
 
 
 
+CREATE TABLE IF NOT EXISTS Medical_procedure
+(
+	id                   INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	name                 VARCHAR(100) NOT NULL,
+	description          VARCHAR(1000) NULL,
+	comment              VARCHAR(1000) NULL,
+	procedure_date       TIMESTAMP NULL,
+	id_case              INTEGER NOT NULL,
+	id_status            INTEGER NOT NULL,
+	id_medical_staff     INTEGER NULL
+);
+
+
+
 CREATE TABLE IF NOT EXISTS Case_status
+(
+	id                   INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	name                 VARCHAR(20) NOT NULL UNIQUE,
+	description          VARCHAR(200) NULL
+);
+
+
+
+CREATE TABLE IF NOT EXISTS Procedure_status
 (
 	id                   INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	name                 VARCHAR(20) NOT NULL UNIQUE,
@@ -117,9 +140,26 @@ ALTER TABLE pdf_file
 ADD FOREIGN KEY PDF_FILE_CASE_FK (id_case) REFERENCES Medical_case (id) ON DELETE CASCADE;
 
 
+
 ALTER TABLE Visit
 ADD FOREIGN KEY VISIT_MEDICAL_STAFF_FK (id_medical_staff) REFERENCES Medical_staff (id);
 
 
+
 ALTER TABLE Visit
 ADD FOREIGN KEY VISIT_PATIENT_FK (id_patient) REFERENCES Patient (id) ON DELETE CASCADE;
+
+
+
+ALTER TABLE Medical_procedure
+ADD FOREIGN KEY PROCEDURE_PROCEDURE_STATUS_FK (id_status) REFERENCES Procedure_status (id);
+
+
+
+ALTER TABLE Medical_procedure
+ADD FOREIGN KEY PROCEDURE_CASE_FK (id_case) REFERENCES Medical_case (id);
+
+
+
+ALTER TABLE Medical_procedure
+ADD FOREIGN KEY PROCEDURE_MEDICAL_STAFF_FK (id_medical_staff) REFERENCES Medical_staff (id);
