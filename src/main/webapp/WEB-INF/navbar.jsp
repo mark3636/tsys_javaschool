@@ -13,6 +13,9 @@
                 <a class="nav-link" href="/medical-cases">Medical cases</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="/medical-procedures">Medical procedures</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="/medical-staff">Medical staff</a>
             </li>
             <li class="nav-item">
