@@ -24,16 +24,19 @@ public class MedicalCaseController {
     private final  MedicalStaffService medicalStaffService;
     private final PdfFileService pdfFileService;
     private final  DiagnosisService diagnosisService;
+    private final  MedicalProcedureService medicalProcedureService;
 
     public MedicalCaseController(final CaseStatusService caseStatusService, final MedicalCaseService medicalCaseService,
                                  final PatientService patientService, final MedicalStaffService medicalStaffService,
-                                 final PdfFileService pdfFileService, final DiagnosisService diagnosisService) {
+                                 final PdfFileService pdfFileService, final DiagnosisService diagnosisService,
+                                 final MedicalProcedureService medicalProcedureService) {
         this.caseStatusService = caseStatusService;
         this.medicalCaseService = medicalCaseService;
         this.patientService = patientService;
         this.medicalStaffService = medicalStaffService;
         this.pdfFileService = pdfFileService;
         this.diagnosisService = diagnosisService;
+        this.medicalProcedureService = medicalProcedureService;
     }
 
     @RequestMapping(value = "/patient-details/{patientId}/new-medical-case", method = RequestMethod.GET)
@@ -71,6 +74,7 @@ public class MedicalCaseController {
         model.addAttribute("medicalCase", medicalCaseService.getById(id));
         model.addAttribute("pdfFiles", pdfFileService.getByMedicalCaseId(id));
         model.addAttribute("diagnoses", diagnosisService.getByMedicalCaseId(id));
+        model.addAttribute("medicalProcedures", medicalProcedureService.getByMedicalCase(id));
 
         return "medical-case";
     }
@@ -78,6 +82,7 @@ public class MedicalCaseController {
     @RequestMapping(value = "/medical-case/{id}/cancel")
     public String cancelMedicalCase(@PathVariable("id") int id, Model model) {
         MedicalCase medicalCase = medicalCaseService.getById(id);
+
         medicalCase.setCaseStatus(caseStatusService.getByName("CANCELLED"));
         medicalCase.setEndingDate(new Date());
 
@@ -96,6 +101,26 @@ public class MedicalCaseController {
         medicalCaseService.update(medicalCase);
 
         return "redirect:/medical-cases/";
+    }
+
+    @RequestMapping(value = "/medical-case/{id}/complete", method = RequestMethod.POST)
+    public void ccompleteMedicalCase(@PathVariable("id") int id) {
+        MedicalCase medicalCase = medicalCaseService.getById(id);
+
+        medicalCase.setCaseStatus(caseStatusService.getByName("COMPLETED"));
+        medicalCase.setEndingDate(new Date());
+
+        medicalCaseService.update(medicalCase);
+    }
+
+    @RequestMapping(value = "/medical-case/{id}/cancel", method = RequestMethod.POST)
+    public void ccancelMedicalCase(@PathVariable("id") int id) {
+        MedicalCase medicalCase = medicalCaseService.getById(id);
+
+        medicalCase.setCaseStatus(caseStatusService.getByName("CANCELLED"));
+        medicalCase.setEndingDate(new Date());
+
+        medicalCaseService.update(medicalCase);
     }
 
     @RequestMapping(value = "/medical-case/{medicalCaseId}/diagnosis", method = RequestMethod.GET)
