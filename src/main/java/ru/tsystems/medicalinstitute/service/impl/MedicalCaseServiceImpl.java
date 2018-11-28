@@ -14,6 +14,7 @@ import java.util.List;
 @Transactional
 public class MedicalCaseServiceImpl implements MedicalCaseService {
     private final MedicalCaseDAO medicalCaseDAO;
+
     private MedicalCaseMapper mapper = Mappers.getMapper(MedicalCaseMapper.class);
 
     public MedicalCaseServiceImpl(final MedicalCaseDAO medicalCaseDAO) {

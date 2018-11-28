@@ -20,8 +20,8 @@ public class PatientDAOImpl extends AbstractDAOImpl<PatientEntity> implements Pa
     @Override
     public List<PatientEntity> filterPatients(String surname, Date birthday, String medicalCaseNumber) {
         Query query = getSession().createQuery(
-                "select distinct pe " +
-                        "from PatientEntity as pe inner join MedicalCaseEntity as mce" +
+                "select distinct pe" +
+                        " from PatientEntity as pe inner join MedicalCaseEntity as mce" +
                         " on pe.id = mce.patient.id" +
                         " where upper(pe.surname) like upper(concat('%', :surname, '%'))" +
                         " and upper(mce.number) like upper(concat('%', :medicalCaseNumber, '%'))" +
