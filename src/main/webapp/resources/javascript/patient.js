@@ -21,10 +21,13 @@ $(document).ready(function () {
     $("#birthday").datepicker({
         dateFormat: "yy-mm-dd",
         minDate: "-120y",
-        maxDate: "0",
+        maxDate: 0,
         changeMonth: true,
         changeYear: true,
-        yearRange: "-120:0"
+        yearRange: "-120:+0",
+        onClose: function() {
+            $(this).valid();
+        }
     });
 
     $("#patient").validate({

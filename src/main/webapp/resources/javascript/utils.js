@@ -6,6 +6,26 @@ function confirmDelete(delForm, delUrl) {
     return false;
 }
 
+function cancelMedicalCase(medicalCaseId) {
+    $.ajax({
+        type: 'POST',
+        url: "/medical-case/" + medicalCaseId + "/cancel"
+    })
+}
+
+function completeMedicalCase(medicalCaseId) {
+    $.ajax({
+        type: 'POST',
+        url: "/medical-case/" + medicalCaseId + "/complete",
+        success: function () {
+            console.log("succes")
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}
+
 function getBeginningTime(patientId) {
     var medicalStaff = $('#medicalStaff');
     var visitDate = $('#visitDate');
