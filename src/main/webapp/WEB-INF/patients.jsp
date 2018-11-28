@@ -5,16 +5,21 @@
 <head>
     <title>Patients</title>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/> ">
+    <link rel="stylesheet" href="<c:url value="/resources/css/styles.css"/> ">
+    <link rel="stylesheet" href="<c:url value="/resources/css/jquery-ui.css"/> ">
 </head>
 <body>
 <div class="container">
     <c:import url="navbar.jsp"/>
 
     <nav class="navbar navbar-light bg-light">
-        <form class="form-inline" method="get" action="/patients">
-            <input class="form-control mr-sm-2" type="search" name="surname" value="${surname}" placeholder="Surname" aria-label="Search">
-            <input class="form-control mr-sm-2" type="date" name="birthday" value="${birthday}" placeholder="Birthday" aria-label="Search">
-            <input class="form-control mr-sm-2" type="search" name="caseNumber" value="${caseNumber}" placeholder="Medical case number" aria-label="Search">
+        <form class="form-inline" method="get" action="/patients" id="search">
+            <input class="form-control mr-sm-2" type="search" name="surname" value="${surname}" placeholder="Surname"
+                   aria-label="Search">
+            <input class="form-control mr-sm-2" type="search" id="birthday" name="birthday" value="${birthday}"
+                   placeholder="Birthday" aria-label="Search" readonly="readonly" style="background-color: white">
+            <input class="form-control mr-sm-2" type="search" name="caseNumber" value="${caseNumber}"
+                   placeholder="Medical case number" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </nav>
@@ -44,7 +49,8 @@
                         <td><a href="<c:url value='/patient-details/${patient.id}' />">Details</a></td>
                         <td><a href="<c:url value='/patient/${patient.id}' />">Edit</a></td>
                         <td><a href="<c:url value='/remove/${patient.id}' />"
-                               onclick="return confirmDelete(this, '${pageContext.request.contextPath}/remove/${patient.id}')">Delete</a></td>
+                               onclick="return confirmDelete(this, '${pageContext.request.contextPath}/remove/${patient.id}')">Delete</a>
+                        </td>
                     </tr>
                 </c:forEach>
             </table>
@@ -54,6 +60,12 @@
         </c:if>
     </div>
 </div>
+
 <script type="text/javascript" src="<c:url value="/resources/javascript/utils.js"/> "></script>
+<script type="text/javascript" src="<c:url value="/resources/javascript/jquery.js"/> "></script>
+<script type="text/javascript" src="<c:url value="/resources/javascript/jquery-ui.js"/> "></script>
+<script type="text/javascript" src="<c:url value="/resources/javascript/jquery.validate.min.js"/> "></script>
+<script type="text/javascript" src="<c:url value="/resources/javascript/patients.js"/> "></script>
+
 </body>
 </html>
