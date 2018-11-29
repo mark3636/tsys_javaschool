@@ -22,4 +22,15 @@ public class MedicalCaseDAOImpl extends AbstractDAOImpl<MedicalCaseEntity> imple
         query.setParameter("patientId", patientId);
         return query.list();
     }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<MedicalCaseEntity> filter(String caseNumber, String patientName) {
+        Query query = getSession().createQuery("from MedicalCaseEntity" +
+                " where upper(concat(patient.name, patient.surname)) like upper(concat('%', :patientName, '%'))" +
+                " and upper(number) like upper(concat('%', :caseNumber, '%'))");
+        query.setParameter("patientName", patientName);
+        query.setParameter("caseNumber", caseNumber);
+        return query.list();
+    }
 }

@@ -32,6 +32,11 @@ public class MedicalCaseServiceImpl implements MedicalCaseService {
     }
 
     @Override
+    public List<MedicalCase> filter(String caseNumber, String patientName) {
+        return mapper.toBos(medicalCaseDAO.filter(caseNumber, patientName));
+    }
+
+    @Override
     public void add(MedicalCase bo) {
         medicalCaseDAO.add(mapper.fromBo(bo));
     }

@@ -17,4 +17,6 @@ public interface MedicalCaseService extends AbstractService<MedicalCase> {
      * @return List of medical cases
      */
     List<MedicalCase> getByPatientId(int patientId);
+
+    List<MedicalCase> filter(String caseNumber, String patientName);
 }
