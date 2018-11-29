@@ -21,10 +21,10 @@ public class MedicalCaseController {
     private final CaseStatusService caseStatusService;
     private final MedicalCaseService medicalCaseService;
     private final PatientService patientService;
-    private final  MedicalStaffService medicalStaffService;
+    private final MedicalStaffService medicalStaffService;
     private final PdfFileService pdfFileService;
-    private final  DiagnosisService diagnosisService;
-    private final  MedicalProcedureService medicalProcedureService;
+    private final DiagnosisService diagnosisService;
+    private final MedicalProcedureService medicalProcedureService;
 
     public MedicalCaseController(final CaseStatusService caseStatusService, final MedicalCaseService medicalCaseService,
                                  final PatientService patientService, final MedicalStaffService medicalStaffService,
@@ -63,8 +63,12 @@ public class MedicalCaseController {
     }
 
     @RequestMapping(value = "/medical-cases", method = RequestMethod.GET)
-    public String listMedicalCases(Model model) {
-        model.addAttribute("medicalCases", medicalCaseService.listMedicalCases());
+    public String listMedicalCases(@RequestParam(required = false, defaultValue = "") String caseNumber,
+                                   @RequestParam(required = false, defaultValue = "") String patientName,
+                                   Model model) {
+        model.addAttribute("medicalCases", medicalCaseService.filter(caseNumber, patientName));
+        model.addAttribute("patientName", patientName);
+        model.addAttribute("caseNumber", caseNumber);
 
         return "medical-cases";
     }
@@ -79,48 +83,19 @@ public class MedicalCaseController {
         return "medical-case";
     }
 
-    @RequestMapping(value = "/medical-case/{id}/cancel")
-    public String cancelMedicalCase(@PathVariable("id") int id, Model model) {
+    @RequestMapping(value = "/medical-case/{id}/change", method = RequestMethod.POST)
+    public @ResponseBody
+    Date changeMedicalCaseStatus(@PathVariable("id") int id, @RequestBody String status) {
         MedicalCase medicalCase = medicalCaseService.getById(id);
 
-        medicalCase.setCaseStatus(caseStatusService.getByName("CANCELLED"));
-        medicalCase.setEndingDate(new Date());
+        medicalCase.setCaseStatus(caseStatusService.getByName(status));
+
+        Date endingDate = new Date();
+        medicalCase.setEndingDate(endingDate);
 
         medicalCaseService.update(medicalCase);
 
-        return "redirect:/medical-cases";
-    }
-
-    @RequestMapping(value = "/medical-case/{id}/complete")
-    public String completeMedicalCase(@PathVariable("id") int id, Model model) {
-        MedicalCase medicalCase = medicalCaseService.getById(id);
-
-        medicalCase.setCaseStatus(caseStatusService.getByName("COMPLETED"));
-        medicalCase.setEndingDate(new Date());
-
-        medicalCaseService.update(medicalCase);
-
-        return "redirect:/medical-cases/";
-    }
-
-    @RequestMapping(value = "/medical-case/{id}/complete", method = RequestMethod.POST)
-    public void ccompleteMedicalCase(@PathVariable("id") int id) {
-        MedicalCase medicalCase = medicalCaseService.getById(id);
-
-        medicalCase.setCaseStatus(caseStatusService.getByName("COMPLETED"));
-        medicalCase.setEndingDate(new Date());
-
-        medicalCaseService.update(medicalCase);
-    }
-
-    @RequestMapping(value = "/medical-case/{id}/cancel", method = RequestMethod.POST)
-    public void ccancelMedicalCase(@PathVariable("id") int id) {
-        MedicalCase medicalCase = medicalCaseService.getById(id);
-
-        medicalCase.setCaseStatus(caseStatusService.getByName("CANCELLED"));
-        medicalCase.setEndingDate(new Date());
-
-        medicalCaseService.update(medicalCase);
+        return endingDate;
     }
 
     @RequestMapping(value = "/medical-case/{medicalCaseId}/diagnosis", method = RequestMethod.GET)
@@ -150,7 +125,7 @@ public class MedicalCaseController {
     }
 
     @RequestMapping(value = "/medical-case/{medicalCaseId}/diagnosis", method = RequestMethod.POST)
-    public String addPatient(@PathVariable("medicalCaseId") int medicalCaseId, @ModelAttribute("diagnosis") Diagnosis diagnosis,  Model model) {
+    public String addPatient(@PathVariable("medicalCaseId") int medicalCaseId, @ModelAttribute("diagnosis") Diagnosis diagnosis, Model model) {
         if (diagnosis.getId() == 0) {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             diagnosis.setMedicalStaff(medicalStaffService.findByEmail(userDetails.getUsername()));
@@ -177,8 +152,7 @@ public class MedicalCaseController {
             pdfFile.setData(file.getBytes());
             pdfFile.setMedicalCase(medicalCaseService.getById(id));
             pdfFileService.add(pdfFile);
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             return "redirect:/medical-cases";
         }
 

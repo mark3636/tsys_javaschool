@@ -1,5 +1,6 @@
 package ru.tsystems.medicalinstitute.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -25,11 +26,6 @@ public class PatientController {
         this.patientService = patientService;
         this.medicalCaseService = medicalCaseService;
         this.visitService = visitService;
-    }
-
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String homePage() {
-        return "redirect:/patients";
     }
 
     @RequestMapping(value = "/patients", method = RequestMethod.GET)
@@ -83,15 +79,16 @@ public class PatientController {
         return "redirect:/patients";
     }
 
-    @RequestMapping("/remove/{id}")
-    public String removePatient(@PathVariable("id") int id) {
+    @RequestMapping(value = "/patient/{id}/delete", method = RequestMethod.DELETE)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void removePatient(@PathVariable("id") int id) {
         patientService.remove(id);
-        return "redirect:/patients";
     }
 
     @RequestMapping(value = "/patient/{id}", method = RequestMethod.GET)
     public String editPatient(@PathVariable("id") int id, Model model) {
         model.addAttribute("patient", patientService.getById(id));
+
         return "patient";
     }
 }

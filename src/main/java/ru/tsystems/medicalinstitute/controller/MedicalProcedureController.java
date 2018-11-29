@@ -1,11 +1,13 @@
 package ru.tsystems.medicalinstitute.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.tsystems.medicalinstitute.bo.MedicalProcedure;
+import ru.tsystems.medicalinstitute.bo.ProcedureCommentForm;
 import ru.tsystems.medicalinstitute.service.MedicalCaseService;
 import ru.tsystems.medicalinstitute.service.MedicalProcedureService;
 import ru.tsystems.medicalinstitute.service.MedicalStaffService;
@@ -85,17 +87,18 @@ public class MedicalProcedureController {
         return "redirect:/medical-case/{medicalCaseId}";
     }
 
-    @RequestMapping(value = "/medical-procedure/{id}/change")
-    public String doneProcedure(@PathVariable("id") int id, @RequestParam("status") String status, Model model) {
+    @RequestMapping(value = "/medical-procedure/{id}/change", method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void changeProcedureStatus(@PathVariable("id") int id,
+                                      @RequestBody ProcedureCommentForm procedureCommentForm) {
         MedicalProcedure medicalProcedure = medicalProcedureService.getById(id);
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         medicalProcedure.setMedicalStaff(medicalStaffService.findByEmail(userDetails.getUsername()));
         medicalProcedure.setProcedureDate(new Date());
-        medicalProcedure.setProcedureStatus(procedureStatusService.getByName(status));
+        medicalProcedure.setProcedureStatus(procedureStatusService.getByName(procedureCommentForm.getStatus()));
+        medicalProcedure.setComment(procedureCommentForm.getComment());
 
         medicalProcedureService.update(medicalProcedure);
-
-        return "redirect:/medical-procedures/";
     }
 }
