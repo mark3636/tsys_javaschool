@@ -20,3 +20,9 @@ VALUES('DONE', 'Procedure has done');
 
 INSERT INTO procedure_status(name, description)
 VALUES('NOT_DONE', 'Procedure has not done');
+
+INSERT INTO role(name, alias, description)
+VALUES('Doctor', 'Dr.', 'It is a doctor');
+
+INSERT INTO role(name, alias, description)
+VALUES('Nurse', 'Ns.', 'It is a nurse');

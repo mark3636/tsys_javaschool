@@ -2,7 +2,15 @@ CREATE SCHEMA IF NOT EXISTS Medical_institute;
 
 USE Medical_institute;
 
-DROP TABLE IF EXISTS Visit, Diagnosis, Medical_case, pdf_file, Patient, Medical_staff, Case_status;
+DROP TABLE IF EXISTS Visit, Diagnosis, Medical_case, pdf_file, Patient, Medical_staff, Case_status, Medical_procedure, Role;
+
+CREATE TABLE IF NOT EXISTS Role
+(
+  id                   INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	name                 VARCHAR(20) NOT NULL UNIQUE,
+	alias                VARCHAR(5) NOT NULL UNIQUE,
+	description          VARCHAR(200) NULL
+);
 
 CREATE TABLE IF NOT EXISTS Medical_case
 (
@@ -68,7 +76,8 @@ CREATE TABLE IF NOT EXISTS Medical_staff
 	surname              VARCHAR(20) NOT NULL,
 	birthday             DATE NOT NULL,
 	password             VARCHAR(200) NOT NULL,
-	email                VARCHAR(30) NOT NULL UNIQUE
+	email                VARCHAR(30) NOT NULL UNIQUE,
+	id_role              INTEGER NOT NULL
 );
 
 
@@ -163,3 +172,8 @@ ADD FOREIGN KEY PROCEDURE_CASE_FK (id_case) REFERENCES Medical_case (id);
 
 ALTER TABLE Medical_procedure
 ADD FOREIGN KEY PROCEDURE_MEDICAL_STAFF_FK (id_medical_staff) REFERENCES Medical_staff (id);
+
+
+
+ALTER TABLE Medical_staff
+ADD FOREIGN KEY STAFF_ROLE_FK (id_role) REFERENCES Role (id);
