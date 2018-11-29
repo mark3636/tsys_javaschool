@@ -28,6 +28,11 @@ $(document).ready(function () {
         onClose: function() {
             $(this).valid();
         }
+    }).keyup(function (e) {
+        if (e.keyCode === 8 || e.keyCode === 46) {
+            $.datepicker._clearDate(this);
+            this.blur()
+        }
     });
 
     $("#patient").validate({

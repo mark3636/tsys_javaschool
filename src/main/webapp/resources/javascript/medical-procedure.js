@@ -13,7 +13,7 @@ $(document).ready(function () {
             name: {
                 required: true,
                 regex: "^[a-zA-Z0-9 _.,'-]*$",
-                maxlenght: 100
+                maxlength: 100
             }
         },
         messages: {
