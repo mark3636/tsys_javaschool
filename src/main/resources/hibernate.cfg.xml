@@ -11,14 +11,5 @@
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.enable_lazy_load_no_trans">true</property>
-        <mapping class="ru.tsystems.medicalinstitute.model.CaseStatusEntity"/>
-        <mapping class="ru.tsystems.medicalinstitute.model.VisitEntity"/>
-        <mapping class="ru.tsystems.medicalinstitute.model.PdfFileEntity"/>
-        <mapping class="ru.tsystems.medicalinstitute.model.DiagnosisEntity"/>
-        <mapping class="ru.tsystems.medicalinstitute.model.MedicalStaffEntity"/>
-        <mapping class="ru.tsystems.medicalinstitute.model.MedicalCaseEntity"/>
-        <mapping class="ru.tsystems.medicalinstitute.model.PatientEntity"/>
-        <mapping class="ru.tsystems.medicalinstitute.model.ProcedureStatusEntity"/>
-        <mapping class="ru.tsystems.medicalinstitute.model.MedicalProcedureEntity"/>
     </session-factory>
 </hibernate-configuration>

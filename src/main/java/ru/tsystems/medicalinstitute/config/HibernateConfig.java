@@ -23,6 +23,7 @@ public class HibernateConfig {
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
         factoryBean.setConfigLocation(context.getResource("classpath:hibernate.cfg.xml"));
+        factoryBean.setPackagesToScan("ru.tsystems.medicalinstitute.model");
         factoryBean.setDataSource(dataSource());
         return factoryBean;
     }
