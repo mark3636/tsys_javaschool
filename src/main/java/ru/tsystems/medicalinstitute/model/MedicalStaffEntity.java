@@ -25,6 +25,9 @@ public class MedicalStaffEntity {
     private String password;
     @Column(name = "email", nullable = false, length = 30)
     private String email;
+    @ManyToOne
+    @JoinColumn(name = "id_role", nullable = false)
+    private RoleEntity role;
 
     public int getId() {
         return id;
@@ -66,6 +69,13 @@ public class MedicalStaffEntity {
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public RoleEntity getRole() {
+        return role;
+    }
+    public void setRole(RoleEntity role) {
+        this.role = role;
     }
 
     @Override

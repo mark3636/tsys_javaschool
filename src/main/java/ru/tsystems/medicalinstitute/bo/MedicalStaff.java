@@ -26,6 +26,7 @@ public class MedicalStaff {
     @NotEmpty(message = "Email cannot be empty")
     @Email(message = "Email should be correct")
     private String email;
+    private Role role;
 
     public MedicalStaff() {
     }
@@ -48,13 +49,14 @@ public class MedicalStaff {
         return Objects.hash(id, name, surname, birthday, password, email);
     }
 
-    public MedicalStaff(int id, String name, String surname, Date birthday, String password, String email) {
+    public MedicalStaff(int id, String name, String surname, Date birthday, String password, String email, Role role) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.birthday = birthday;
         this.password = password;
         this.email = email;
+        this.role = role;
     }
 
     public int getId() {
@@ -99,4 +101,10 @@ public class MedicalStaff {
         this.email = email;
     }
 
+    public Role getRole() {
+        return role;
+    }
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }
