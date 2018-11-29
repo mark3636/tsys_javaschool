@@ -13,7 +13,7 @@
 <div class="container">
     <div class="wrapper">
         <h4>Registration</h4>
-        <form:form action="/registration" method="post" modelAttribute="medicalStaff" id="registration">
+        <form action="/registration" method="post" id="registration">
             <c:if test="${not empty error}">
                 <p class="big-error">${error}</p>
             </c:if>
@@ -48,22 +48,25 @@
             </div>
             <div class="form-group">
                 <label for="birthday">Birthday</label>
-                <spring:bind path="birthday">
-                    <input id="birthday" class="form-control" type="text" placeholder="Birthday" value="${status.value}"
-                           name="${status.expression}" readonly="readonly" style="background-color: white"/>
-                    <c:if test="${status.error}">
-                        <c:forEach items="${status.errorMessages}" var="error">
-                            <span class="error"><c:out value="${error}"/></span>
-                        </c:forEach>
-                    </c:if>
-                </spring:bind>
+                <input id="birthday" class="form-control" type="text" placeholder="Birthday" value="${medicalStaff.birthday}"
+                       name="birthday" readonly="readonly" style="background-color: white"/>
+                <form:errors path="birthday" cssClass="error"/>
             </div>
+            <div class="form-group">
+                <label for="role">Role</label>
+                <form:select path="roles" name="roleId" id="role" cssClass="form-control">
+                    <c:forEach items="${roles}" var="rl">
+                        <form:option value="${rl.id}" label="${rl.name}"/>
+                    </c:forEach>
+                </form:select>
+            </div>
+
             <div>
                 <input class="btn btn-primary" type="submit"
                        value="<spring:message text="Register"/>"/>
                 <a href="/login">Back</a>
             </div>
-        </form:form>
+        </form>
     </div>
 </div>
 

@@ -13,11 +13,11 @@
     <c:import url="navbar.jsp"/>
 
     <nav class="navbar navbar-light bg-light">
-        <form class="form-inline" method="get" action="/patients" id="search">
-            <input class="form-control mr-sm-2" type="search" name="surname" value="${surname}" placeholder="Surname"
+        <form class="form-inline" method="get" action="/patients" id="search" style="margin-bottom: 0">
+            <input class="form-control mr-sm-2" type="search" name="surname" value="${surname}" placeholder="Patient name"
                    aria-label="Search">
             <input class="form-control mr-sm-2" type="search" id="birthday" name="birthday" value="${birthday}"
-                   placeholder="Birthday" aria-label="Search" readonly="readonly" style="background-color: white">
+                   placeholder="Patient birthday" aria-label="Search" readonly="readonly" style="background-color: white">
             <input class="form-control mr-sm-2" type="search" name="caseNumber" value="${caseNumber}"
                    placeholder="Medical case number" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -33,7 +33,6 @@
             <table class="table table-striped">
                 <tr>
                     <th>Name</th>
-                    <th>Surname</th>
                     <th>Social security number</th>
                     <th>Phone number</th>
                     <th>Details</th>
@@ -41,15 +40,13 @@
                     <th>Delete</th>
                 </tr>
                 <c:forEach items="${listPatients}" var="patient">
-                    <tr>
-                        <td>${patient.name}</td>
-                        <td>${patient.surname}</td>
+                    <tr id="tr-${patient.id}">
+                        <td>${patient.name} ${patient.surname}</td>
                         <td>${patient.socialSecurityNumber}</td>
                         <td>${patient.phoneNumber}</td>
                         <td><a href="<c:url value='/patient-details/${patient.id}' />">Details</a></td>
                         <td><a href="<c:url value='/patient/${patient.id}' />">Edit</a></td>
-                        <td><a href="<c:url value='/remove/${patient.id}' />"
-                               onclick="return confirmDelete(this, '${pageContext.request.contextPath}/remove/${patient.id}')">Delete</a>
+                        <td><a href="#" onclick="return deletePatient(${patient.id})">Delete</a>
                         </td>
                     </tr>
                 </c:forEach>
@@ -61,7 +58,6 @@
     </div>
 </div>
 
-<script type="text/javascript" src="<c:url value="/resources/javascript/utils.js"/> "></script>
 <script type="text/javascript" src="<c:url value="/resources/javascript/jquery.js"/> "></script>
 <script type="text/javascript" src="<c:url value="/resources/javascript/jquery-ui.js"/> "></script>
 <script type="text/javascript" src="<c:url value="/resources/javascript/jquery.validate.min.js"/> "></script>

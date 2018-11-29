@@ -52,7 +52,6 @@
     <script type="text/javascript" src="<c:url value="/resources/javascript/jquery.js"/> "></script>
     <script type="text/javascript" src="<c:url value="/resources/javascript/jquery-ui.js"/> "></script>
     <script type="text/javascript" src="<c:url value="/resources/javascript/jquery.timepicker.js"/> "></script>
-    <script type="text/javascript" src="<c:url value="/resources/javascript/utils.js"/> "></script>
     <script type="text/javascript" src="<c:url value="/resources/javascript/jquery.validate.min.js"/> "></script>
     <script type="text/javascript" src="<c:url value="/resources/javascript/visit.js"/> "></script>
 </div>

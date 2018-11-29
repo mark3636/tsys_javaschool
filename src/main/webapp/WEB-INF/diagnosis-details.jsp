@@ -13,7 +13,8 @@
     <h4>Diagnosis:</h4>
     <div>Name: ${diagnosis.name}</div>
     <div>Diagnosis date: ${diagnosis.diagnosisDate}</div>
-    <div>Medical staff: ${diagnosis.medicalStaff.name} ${diagnosis.medicalStaff.surname}</div>
+    <div>Medical
+        staff: ${diagnosis.medicalStaff.role.alias} ${diagnosis.medicalStaff.name} ${diagnosis.medicalStaff.surname}</div>
     <c:if test="${not empty diagnosis.comment}">
         <div>Comment: ${diagnosis.comment}</div>
     </c:if>

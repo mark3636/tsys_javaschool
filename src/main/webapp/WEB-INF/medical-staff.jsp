@@ -15,14 +15,14 @@
         <table class="table table-striped">
             <tr>
                 <th>Name</th>
-                <th>Surname</th>
+                <th>Role</th>
                 <th>Email</th>
                 <th>Birthday</th>
             </tr>
             <c:forEach items="${listMedicalStaff}" var="medicalStaff">
                 <tr>
-                    <td>${medicalStaff.name}</td>
-                    <td>${medicalStaff.surname}</td>
+                    <td>${medicalStaff.name} ${medicalStaff.surname}</td>
+                    <td>${medicalStaff.role.name}</td>
                     <td>${medicalStaff.email}</td>
                     <td>${medicalStaff.birthday}</td>
                 </tr>

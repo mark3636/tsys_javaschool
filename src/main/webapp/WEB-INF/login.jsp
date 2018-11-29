@@ -21,7 +21,7 @@
                        class="btn btn-block btn-primary btn-default" value="Log in">
             </div>
         </form>
-        <a href="<c:url value="/registration"/>">Registration</a>
+        <a href="/registration">Registration</a>
     </div>
 </div>
 </body>

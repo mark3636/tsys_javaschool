@@ -19,8 +19,10 @@
         <c:if test="${empty medicalCase.endingDate}">In progress</c:if>
     </div>
     <div>Case status: ${medicalCase.caseStatus.name}</div>
-    <div>Patient's ssn: ${medicalCase.patient.socialSecurityNumber}</div>
-    <div>Medical staff: Dr. ${medicalCase.medicalStaff.name} ${medicalCase.medicalStaff.surname}</div>
+    <div>Patient ssn: ${medicalCase.patient.socialSecurityNumber}</div>
+    <div>Medical
+        staff: ${medicalCase.medicalStaff.role.alias} ${medicalCase.medicalStaff.name} ${medicalCase.medicalStaff.surname}
+    </div>
 
     <div>
         <c:if test="${not empty medicalProcedures}">
@@ -28,7 +30,7 @@
             <ul>
                 <c:forEach items="${medicalProcedures}" var="medicalProcedure">
                     <li>
-                        Name: ${medicalProcedure.name} | <a
+                        Name: ${medicalProcedure.name} | Status: ${medicalProcedure.procedureStatus.name} | <a
                             href="/procedure-details/${medicalProcedure.id}">Details</a>
                     </li>
                 </c:forEach>
@@ -37,7 +39,7 @@
 
         <div><c:if test="${empty medicalProcedures}">Medical procedures: no</c:if></div>
 
-        <c:if test="${medicalCase.caseStatus.name eq 'OPENED'}">
+        <c:if test="${not(medicalCase.caseStatus.name eq 'CANCELLED')}">
             <a href="/medical-case/${medicalCase.id}/medical-procedure" class="btn btn-primary mb-2">New medical
                 procedure</a>
         </c:if>
@@ -49,7 +51,7 @@
             <ul>
                 <c:forEach items="${diagnoses}" var="diagnosis">
                     <li>
-                        Name: ${diagnosis.name}, date: ${diagnosis.diagnosisDate} | <a
+                        Name: ${diagnosis.name} | Date: ${diagnosis.diagnosisDate} | <a
                             href="/medical-case/${medicalCase.id}/diagnosis-details/${diagnosis.id}">Details</a> | <a
                             href="/medical-case/${medicalCase.id}/diagnosis/${diagnosis.id}">Edit</a>
                     </li>
@@ -59,7 +61,7 @@
 
         <div><c:if test="${empty diagnoses}">Diagnoses: no</c:if></div>
 
-        <c:if test="${medicalCase.caseStatus.name eq 'OPENED'}">
+        <c:if test="${not(medicalCase.caseStatus.name eq 'CANCELLED')}">
             <a href="/medical-case/${medicalCase.id}/diagnosis" class="btn btn-primary mb-2">New diagnosis</a>
         </c:if>
     </div>
@@ -80,7 +82,7 @@
             </ul>
         </c:if>
 
-        <c:if test="${medicalCase.caseStatus.name eq 'OPENED'}">
+        <c:if test="${not(medicalCase.caseStatus.name eq 'CANCELLED')}">
             <form method="post" action="/medical-case/${medicalCase.id}/upload" enctype="multipart/form-data">
                 <div class="form-group">
                     <input class="form-control-file" type="file" name="file" id="file"/>
@@ -88,6 +90,10 @@
                 </div>
             </form>
         </c:if>
+    </div>
+    <div>
+        <a href="/patient/${medicalCase.patient.id}">To patient</a> |
+        <a href="/medical-cases">To all medical cases</a>
     </div>
 </div>
 </body>
