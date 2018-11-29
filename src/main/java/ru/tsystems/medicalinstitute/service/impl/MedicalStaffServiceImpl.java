@@ -69,7 +69,7 @@ public class MedicalStaffServiceImpl implements MedicalStaffService {
         }
 
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        grantedAuthorities.add(new SimpleGrantedAuthority("USER"));
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + medicalStaff.getRole().getName().toUpperCase()));
 
         return new User(medicalStaff.getEmail(), medicalStaff.getPassword(), true, true, true, true, grantedAuthorities);
     }
