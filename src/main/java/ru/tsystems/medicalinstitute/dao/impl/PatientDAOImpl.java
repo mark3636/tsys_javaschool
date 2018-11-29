@@ -23,7 +23,7 @@ public class PatientDAOImpl extends AbstractDAOImpl<PatientEntity> implements Pa
                 "select distinct pe" +
                         " from PatientEntity as pe inner join MedicalCaseEntity as mce" +
                         " on pe.id = mce.patient.id" +
-                        " where upper(pe.surname) like upper(concat('%', :surname, '%'))" +
+                        " where upper(concat(pe.name, pe.surname)) like upper(concat('%', :surname, '%'))" +
                         " and upper(mce.number) like upper(concat('%', :medicalCaseNumber, '%'))" +
                         " and (:birthday is null or :birthday = pe.birthday)");
         query.setParameter("surname", surname);

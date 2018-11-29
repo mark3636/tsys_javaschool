@@ -28,7 +28,7 @@ public class MedicalProcedureDAOImpl extends AbstractDAOImpl<MedicalProcedureEnt
     @Override
     public List<MedicalProcedureEntity> filter(String patientName, Integer socialSecurityNumber, String caseNumber) {
         Query query = getSession().createQuery("from MedicalProcedureEntity" +
-                " where upper(medicalCase.patient.name) like upper(concat('%', :patientName, '%'))" +
+                " where upper(concat(medicalCase.patient.name, medicalCase.patient.surname)) like upper(concat('%', :patientName, '%'))" +
                 " and (:socialSecurityNumber is null" +
                 " or concat('', medicalCase.patient.socialSecurityNumber) like concat('%', :socialSecurityNumber, '%'))" +
                 " and upper(medicalCase.number) like upper(concat('%', :caseNumber, '%'))");
