@@ -28,7 +28,7 @@ public class VisitController {
     public String newVisit(@PathVariable("patientId") int id, Model model) {
         model.addAttribute("patient", patientService.getById(id));
         model.addAttribute("visits", visitService.listVisits());
-        model.addAttribute("medicalStaff", medicalStaffService.listMedicalStaff());
+        model.addAttribute("medicalStaff", medicalStaffService.getByPosition("DOCTOR"));
         model.addAttribute("medicalStaffId", "");
 
         return "visit";
