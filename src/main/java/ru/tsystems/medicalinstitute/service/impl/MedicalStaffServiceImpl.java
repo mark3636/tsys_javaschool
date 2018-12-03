@@ -40,6 +40,11 @@ public class MedicalStaffServiceImpl implements MedicalStaffService {
     }
 
     @Override
+    public List<MedicalStaff> getByPosition(String position) {
+        return mapper.toBos(medicalStaffDAO.getByPosition(position));
+    }
+
+    @Override
     public void add(MedicalStaff bo)
     {
         bo.setPassword(passwordEncoder.encode(bo.getPassword()));

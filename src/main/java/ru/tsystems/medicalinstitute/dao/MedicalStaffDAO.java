@@ -7,4 +7,5 @@ import java.util.List;
 public interface MedicalStaffDAO extends AbstractDAO<MedicalStaffEntity> {
     List<MedicalStaffEntity> listMedicalStaff();
     MedicalStaffEntity findByEmail(String email);
+    List<MedicalStaffEntity> getByPosition(String position);
 }

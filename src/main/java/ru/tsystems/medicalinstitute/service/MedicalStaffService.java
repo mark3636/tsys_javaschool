@@ -18,4 +18,6 @@ public interface MedicalStaffService extends AbstractService<MedicalStaff>, User
      * @return Medical staff
      */
     MedicalStaff findByEmail(String email);
+
+    List<MedicalStaff> getByPosition(String position);
 }

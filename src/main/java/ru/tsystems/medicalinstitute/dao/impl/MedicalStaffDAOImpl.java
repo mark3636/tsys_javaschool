@@ -27,4 +27,12 @@ public class MedicalStaffDAOImpl extends AbstractDAOImpl<MedicalStaffEntity> imp
             return null;
         }
     }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<MedicalStaffEntity> getByPosition(String position) {
+        Query query = getSession().createQuery("from MedicalStaffEntity where upper(role.name) = upper(:position)");
+        query.setParameter("position", position);
+        return query.list();
+    }
 }
