@@ -14,11 +14,12 @@
 <div class="container">
     <c:import url="navbar.jsp"/>
 
-    <h4>Medical procedure:</h4>
-    <div>Name: ${medicalProcedure.name}</div>
+    <h4>Medical procedure: ${medicalProcedure.name}</h4>
     <div>Description: ${medicalProcedure.description}</div>
     <div>Status: ${medicalProcedure.procedureStatus.name}</div>
-
+    <div>Medical case: ${medicalProcedure.medicalCase.number}</div>
+    <div>Patient: ${medicalProcedure.medicalCase.patient.name} ${medicalProcedure.medicalCase.patient.surname}</div>
+    <div>Patient SSN: ${medicalProcedure.medicalCase.patient.socialSecurityNumber}</div>
     <div>Procedure date:
         <c:if test="${not empty medicalProcedure.medicalStaff}">
             <fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${medicalProcedure.procedureDate}"/>
@@ -27,6 +28,7 @@
             <c:out value="-"/>
         </c:if>
     </div>
+
     <div>Medical staff:
         <c:if test="${not empty medicalProcedure.medicalStaff}">
             <c:out value="${medicalProcedure.medicalStaff.role.alias} ${medicalProcedure.medicalStaff.name} ${medicalProcedure.medicalStaff.surname}"/>
@@ -41,7 +43,7 @@
     <c:if test="${isDoctor}">
         <div>
             <a href="/medical-case/${medicalProcedure.medicalCase.id}">To medical case</a> |
-            <a href="/medical-procedures">To medical procedures</a>
+            <a href="/medical-procedures">To all medical procedures</a>
         </div>
     </c:if>
     <c:if test="${not isDoctor}">

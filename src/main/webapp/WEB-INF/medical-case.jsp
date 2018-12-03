@@ -1,30 +1,41 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Medical case</title>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/> ">
+    <link rel="stylesheet" href="<c:url value="/resources/css/styles.css"/> ">
 </head>
 <body>
 <div class="container">
     <c:import url="navbar.jsp"/>
 
-    <h4>Medical case</h4>
-    <div>Number: ${medicalCase.number}</div>
-    <div>Beginning date: ${medicalCase.beginningDate}</div>
-    <div>Ending date:
-        <c:if test="${not empty medicalCase.endingDate}">${medicalCase.endingDate}</c:if>
-        <c:if test="${empty medicalCase.endingDate}">In progress</c:if>
-    </div>
-    <div>Case status: ${medicalCase.caseStatus.name}</div>
-    <div>Patient ssn: ${medicalCase.patient.socialSecurityNumber}</div>
-    <div>Medical
-        staff: ${medicalCase.medicalStaff.role.alias} ${medicalCase.medicalStaff.name} ${medicalCase.medicalStaff.surname}
+    <div>
+        <h4>Medical case: ${medicalCase.number}</h4>
+        <div>Beginning date: <fmt:formatDate type="date" pattern="yyyy-MM-dd"
+                                             value="${medicalCase.beginningDate}"/></div>
+        <div>Ending date:
+            <c:if test="${not empty medicalCase.endingDate}"><fmt:formatDate type="date" pattern="yyyy-MM-dd"
+                                                                             value="${medicalCase.endingDate}"/></c:if>
+            <c:if test="${empty medicalCase.endingDate}">Undefined</c:if>
+        </div>
+        <div>Case status: ${medicalCase.caseStatus.name}</div>
+        <div>Patient: ${medicalCase.patient.name} ${medicalCase.patient.surname}</div>
+        <div>Patient SSN: ${medicalCase.patient.socialSecurityNumber}</div>
+        <div>Medical
+            staff: ${medicalCase.medicalStaff.role.alias} ${medicalCase.medicalStaff.name} ${medicalCase.medicalStaff.surname}
+        </div>
     </div>
 
-    <div>
+    <div class="separator">
+        <c:if test="${not(medicalCase.caseStatus.name eq 'CANCELLED')}">
+            <a href="/medical-case/${medicalCase.id}/medical-procedure" class="btn btn-secondary mb-2">New medical
+                procedure</a>
+        </c:if>
+
         <c:if test="${not empty medicalProcedures}">
             <div>Medical procedures:</div>
             <ul>
@@ -37,21 +48,21 @@
             </ul>
         </c:if>
 
-        <div><c:if test="${empty medicalProcedures}">Medical procedures: no</c:if></div>
-
-        <c:if test="${not(medicalCase.caseStatus.name eq 'CANCELLED')}">
-            <a href="/medical-case/${medicalCase.id}/medical-procedure" class="btn btn-primary mb-2">New medical
-                procedure</a>
-        </c:if>
+        <div><c:if test="${empty medicalProcedures}">Medical procedures: none</c:if></div>
     </div>
 
-    <div>
+    <div class="separator">
+        <c:if test="${not(medicalCase.caseStatus.name eq 'CANCELLED')}">
+            <a href="/medical-case/${medicalCase.id}/diagnosis" class="btn btn-secondary mb-2">New diagnosis</a>
+        </c:if>
+
         <c:if test="${not empty diagnoses}">
             <div>Diagnoses:</div>
             <ul>
                 <c:forEach items="${diagnoses}" var="diagnosis">
                     <li>
-                        Name: ${diagnosis.name} | Date: ${diagnosis.diagnosisDate} | <a
+                        Name: ${diagnosis.name} | Date: <fmt:formatDate type="date" pattern="yyyy-MM-dd"
+                                                                        value="${diagnosis.diagnosisDate}"/> | <a
                             href="/medical-case/${medicalCase.id}/diagnosis-details/${diagnosis.id}">Details</a> | <a
                             href="/medical-case/${medicalCase.id}/diagnosis/${diagnosis.id}">Edit</a>
                     </li>
@@ -59,15 +70,20 @@
             </ul>
         </c:if>
 
-        <div><c:if test="${empty diagnoses}">Diagnoses: no</c:if></div>
-
-        <c:if test="${not(medicalCase.caseStatus.name eq 'CANCELLED')}">
-            <a href="/medical-case/${medicalCase.id}/diagnosis" class="btn btn-primary mb-2">New diagnosis</a>
-        </c:if>
+        <div><c:if test="${empty diagnoses}">Diagnoses: none</c:if></div>
     </div>
 
-    <div>
-        <c:if test="${empty pdfFiles}">Attachments: no</c:if>
+    <div class="separator">
+        <c:if test="${not(medicalCase.caseStatus.name eq 'CANCELLED')}">
+            <form method="post" action="/medical-case/${medicalCase.id}/upload" enctype="multipart/form-data">
+                <div class="form-group">
+                    <input class="form-control-file" type="file" name="file" id="file"/>
+                    <input class="mt-2 btn btn-secondary" type="submit" value="Add attachment"/>
+                </div>
+            </form>
+        </c:if>
+
+        <c:if test="${empty pdfFiles}">Attachments: none</c:if>
 
         <c:if test="${not empty pdfFiles}">
             <div>Attachments:</div>
@@ -81,18 +97,9 @@
                 </c:forEach>
             </ul>
         </c:if>
-
-        <c:if test="${not(medicalCase.caseStatus.name eq 'CANCELLED')}">
-            <form method="post" action="/medical-case/${medicalCase.id}/upload" enctype="multipart/form-data">
-                <div class="form-group">
-                    <input class="form-control-file" type="file" name="file" id="file"/>
-                    <input class="mt-2 btn btn-primary" type="submit" value="Add attachment"/>
-                </div>
-            </form>
-        </c:if>
     </div>
-    <div>
-        <a href="/patient/${medicalCase.patient.id}">To patient</a> |
+    <div class="separator">
+        <a href="/patient-details/${medicalCase.patient.id}">To patient</a> |
         <a href="/medical-cases">To all medical cases</a>
     </div>
 </div>

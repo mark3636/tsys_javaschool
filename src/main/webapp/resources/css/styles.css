@@ -40,3 +40,9 @@
     color: red;
     font-size: large;
 }
+
+.separator {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 2px dashed grey;
+}

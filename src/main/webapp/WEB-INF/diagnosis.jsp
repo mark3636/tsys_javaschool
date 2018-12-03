@@ -19,12 +19,12 @@
         </c:if>
         <div class="form-group">
             <label for="name">Name</label>
-            <input class="form-control" type="text" id="name" name="name" placeholder="name" value="${diagnosis.name}"/>
+            <input class="form-control" type="text" id="name" name="name" placeholder="Name" value="${diagnosis.name}"/>
         </div>
         <div class="form-group">
             <label for="comment">Comment</label>
-            <input class="form-control" type="text-area" id="comment" name="comment" placeholder="comment"
-                   value="${diagnosis.comment}">
+            <textarea class="form-control" type="text-area" id="comment" name="comment" placeholder="Comment"><c:out
+                    value="${diagnosis.comment}"/></textarea>
         </div>
         <div>
             <c:if test="${diagnosis.id != 0}">

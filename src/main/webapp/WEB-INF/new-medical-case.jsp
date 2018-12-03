@@ -15,7 +15,7 @@
     <form action="/patient-details/${patient.id}/new-medical-case" method="post" id="medicalCase">
 
         <div class="form-group">
-            <label for="number">Number</label>
+            <label for="number">Number (10 characters)</label>
             <input class="form-control" type="text" id="number" name="number" placeholder="Number"
                    value="${medicalCase.number}"/>
         </div>
@@ -24,7 +24,7 @@
             <label for="medicalStaff">Medical staff</label>
             <form:select path="medicalStaff" name="medicalStaffId" id="medicalStaff" cssClass="form-control">
                 <c:forEach items="${medicalStaff}" var="staff">
-                    <form:option value="${staff.id}" label="Dr. ${staff.name} ${staff.surname}"/>
+                    <form:option value="${staff.id}" label="${staff.role.alias} ${staff.name} ${staff.surname}"/>
                 </c:forEach>
             </form:select>
         </div>

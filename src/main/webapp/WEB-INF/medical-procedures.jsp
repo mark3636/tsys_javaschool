@@ -28,9 +28,9 @@
                 <tr>
                     <th>Procedure name</th>
                     <th>Patient name</th>
+                    <th>Patient SSN</th>
                     <th>Medical case number</th>
                     <th>Patient birthday</th>
-                    <th>Patient SSN</th>
                     <th>Details</th>
                     <th>DONE</th>
                     <th>NOT DONE</th>
@@ -39,10 +39,10 @@
                     <c:if test="${not (medicalProcedure.medicalCase.caseStatus.name eq 'CANCELLED')}">
                         <tr id="tr-${medicalProcedure.id}">
                             <td>${medicalProcedure.name}</td>
+                            <td>${medicalProcedure.medicalCase.patient.socialSecurityNumber}</td>
                             <td>${medicalProcedure.medicalCase.patient.name} ${medicalProcedure.medicalCase.patient.surname}</td>
                             <td>${medicalProcedure.medicalCase.number}</td>
                             <td>${medicalProcedure.medicalCase.patient.birthday}</td>
-                            <td>${medicalProcedure.medicalCase.patient.socialSecurityNumber}</td>
                             <td><a href="<c:url value='/procedure-details/${medicalProcedure.id}' />">Details</a></td>
                             <c:if test="${medicalProcedure.procedureStatus.name eq 'NEW'}">
                                 <td><a onclick="changeStatus(${medicalProcedure.id}, 'DONE')"
@@ -72,7 +72,7 @@
                     <!-- Modal content-->
                     <div class="modal-content">
                         <div class="form-group" style="margin: 10px">
-                            <label for="comment">Comment</label>
+                            <label for="comment">Enter your comment</label>
                             <textarea class="form-control" name="comment" id="comment"
                                       placeholder="Comment"></textarea>
                         </div>

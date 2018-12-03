@@ -19,7 +19,7 @@
             <label for="medicalStaff">Medical staff</label>
             <form:select path="medicalStaff" name="medicalStaffId" id="medicalStaff" cssClass="form-control">
                 <c:forEach items="${medicalStaff}" var="staff">
-                    <form:option value="${staff.id}" label="Dr. ${staff.name} ${staff.surname}"/>
+                    <form:option value="${staff.id}" label="${staff.role.alias} ${staff.name} ${staff.surname}"/>
                 </c:forEach>
             </form:select>
         </div>
@@ -34,13 +34,13 @@
         <div class="form-group">
             <label for="beginningTime">Beginning time</label>
             <input class="form-control" id="beginningTime" type="text" name="beginningTime" disabled
-                   onchange="getEndingTime(${patient.id})"/>
+                   placeholder="Beginning time" onchange="getEndingTime(${patient.id})"/>
         </div>
 
         <div class="form-group">
             <label for="endingTime">Ending time</label>
             <input class="form-control" id="endingTime" name="endingTime" disabled type="text"
-                   onchange="readyForSubmit()"/>
+                   placeholder="Ending time" onchange="readyForSubmit()"/>
         </div>
 
         <div>
