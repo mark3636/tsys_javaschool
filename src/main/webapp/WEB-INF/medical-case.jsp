@@ -77,7 +77,7 @@
         <c:if test="${not(medicalCase.caseStatus.name eq 'CANCELLED')}">
             <form method="post" action="/medical-case/${medicalCase.id}/upload" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input class="form-control-file" type="file" name="file" id="file"/>
+                    <input class="form-control-file" type="file" name="file" id="file" onchange="checkFile()"/>
                     <input class="mt-2 btn btn-secondary" type="submit" value="Add attachment"/>
                 </div>
             </form>
@@ -103,5 +103,9 @@
         <a href="/medical-cases">To all medical cases</a>
     </div>
 </div>
+
+<script type="text/javascript" src="<c:url value="/resources/javascript/jquery.js"/> "></script>
+<script type="text/javascript" src="<c:url value="/resources/javascript/utils.js"/> "></script>
+
 </body>
 </html>
