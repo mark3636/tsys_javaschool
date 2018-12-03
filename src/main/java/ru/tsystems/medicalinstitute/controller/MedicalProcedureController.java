@@ -1,7 +1,9 @@
 package ru.tsystems.medicalinstitute.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,8 @@ public class MedicalProcedureController {
     private final MedicalCaseService medicalCaseService;
     private final MedicalStaffService medicalStaffService;
     private final ProcedureStatusService procedureStatusService;
+
+    private final Logger logger = LoggerFactory.getLogger(MedicalProcedureController.class);
 
     public MedicalProcedureController(final MedicalProcedureService medicalProcedureService,
                                       final MedicalCaseService medicalCaseService,
@@ -74,14 +78,16 @@ public class MedicalProcedureController {
 
     @RequestMapping(value = "/medical-case/{medicalCaseId}/medical-procedure", method = RequestMethod.POST)
     public String addPatient(@PathVariable("medicalCaseId") int medicalCaseId,
-                             @ModelAttribute("medicalProcedure") MedicalProcedure medicalProcedure, Model model) {
-        if (medicalProcedure.getId() == 0) {
-            medicalProcedure.setMedicalCase(medicalCaseService.getById(medicalCaseId));
-            medicalProcedure.setProcedureStatus(procedureStatusService.getByName("NEW"));
+                             @ModelAttribute("medicalProcedure") MedicalProcedure medicalProcedure) {
+        medicalProcedure.setMedicalCase(medicalCaseService.getById(medicalCaseId));
+        medicalProcedure.setProcedureStatus(procedureStatusService.getByName("NEW"));
 
+        if (medicalProcedure.getId() == 0) {
             medicalProcedureService.add(medicalProcedure);
+            logger.info("Medical procedure {} was created", medicalProcedure.getName());
         } else {
             medicalProcedureService.update(medicalProcedure);
+            logger.info("Medical procedure {} was updated", medicalProcedure.getName());
         }
 
         return "redirect:/medical-case/{medicalCaseId}";
@@ -89,10 +95,10 @@ public class MedicalProcedureController {
 
     @RequestMapping(value = "/medical-procedure/{id}/change", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void changeProcedureStatus(@PathVariable("id") int id,
+    public void changeProcedureStatus(Authentication authentication, @PathVariable("id") int id,
                                       @RequestBody ProcedureCommentForm procedureCommentForm) {
         MedicalProcedure medicalProcedure = medicalProcedureService.getById(id);
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         medicalProcedure.setMedicalStaff(medicalStaffService.findByEmail(userDetails.getUsername()));
         medicalProcedure.setProcedureDate(new Date());
@@ -100,5 +106,9 @@ public class MedicalProcedureController {
         medicalProcedure.setComment(procedureCommentForm.getComment());
 
         medicalProcedureService.update(medicalProcedure);
+
+        logger.info("Medical procedure {} was {} by {} in {}",
+                medicalProcedure.getName(), medicalProcedure.getProcedureStatus().getName(),
+                medicalProcedure.getMedicalStaff().getEmail(), medicalProcedure.getProcedureDate());
     }
 }

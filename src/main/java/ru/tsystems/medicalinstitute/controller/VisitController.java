@@ -1,5 +1,7 @@
 package ru.tsystems.medicalinstitute.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,8 @@ public class VisitController {
     private final PatientService patientService;
     private final VisitService visitService;
     private final MedicalStaffService medicalStaffService;
+
+    private final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     public VisitController(final PatientService patientService, final VisitService visitService,
                            final MedicalStaffService medicalStaffService) {
@@ -38,8 +42,14 @@ public class VisitController {
     public @ResponseBody
     List<String> getExistedTime(
             @RequestParam(value = "medicalStaff", required = false) String medicalStaff,
-            @RequestParam(value = "visitDate", required = false) String visitDate) throws ParseException {
-        return visitService.getExistedTime(Integer.parseInt(medicalStaff), visitDate);
+            @RequestParam(value = "visitDate", required = false) String visitDate) {
+        try {
+            return visitService.getExistedTime(Integer.parseInt(medicalStaff), visitDate);
+        } catch (ParseException e) {
+            logger.error("Can't parse medical staff id: {} or visit date: {}", medicalStaff, visitDate);
+            logger.error("Exception: {}", e.getMessage());
+            return null;
+        }
     }
 
     @RequestMapping(value = "/patient-details/{patientId}/new-visit-ending-time", method = RequestMethod.GET)
@@ -47,8 +57,15 @@ public class VisitController {
     List<String> getEndingTime(
             @RequestParam(value = "medicalStaff", required = false) String medicalStaff,
             @RequestParam(value = "visitDate", required = false) String visitDate,
-            @RequestParam(value = "beginningTime", required = false) String beginningTime) throws ParseException {
-        return visitService.getEndingTime(Integer.parseInt(medicalStaff), visitDate, beginningTime);
+            @RequestParam(value = "beginningTime", required = false) String beginningTime) {
+        try {
+            return visitService.getEndingTime(Integer.parseInt(medicalStaff), visitDate, beginningTime);
+        } catch (ParseException e) {
+            logger.error("Can't parse medical staff id: {}, visit date: {} or beginning time: {}",
+                    medicalStaff, visitDate, beginningTime);
+            logger.error("Exception: {}", e.getMessage());
+            return null;
+        }
     }
 
     @RequestMapping(value = "/patient-details/{patientId}/new-visit", method = RequestMethod.POST)
@@ -57,6 +74,8 @@ public class VisitController {
         visit.setMedicalStaff(medicalStaffService.getById(medicalStaffId));
         visit.setPatient(patientService.getById(patientId));
         visitService.add(visit);
+
+        logger.info("New visit {} was added", visit);
 
         return "redirect:/patient-details/{patientId}";
     }

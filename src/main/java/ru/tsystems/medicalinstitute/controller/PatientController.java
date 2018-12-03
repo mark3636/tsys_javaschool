@@ -1,7 +1,9 @@
 package ru.tsystems.medicalinstitute.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,8 @@ public class PatientController {
     private final MedicalCaseService medicalCaseService;
     private final VisitService visitService;
 
+    private final Logger logger = LoggerFactory.getLogger(PatientController.class);
+
     public PatientController(final PatientService patientService, final MedicalCaseService medicalCaseService,
                              final VisitService visitService) {
         this.patientService = patientService;
@@ -37,7 +41,8 @@ public class PatientController {
         model.addAttribute("surname", surname);
         model.addAttribute("birthday", birthday);
         model.addAttribute("caseNumber", caseNumber);
-        model.addAttribute("listPatients", patientService.filterPatients(surname.toLowerCase(), birthday, caseNumber.toLowerCase()));
+        model.addAttribute("listPatients", patientService.filterPatients(surname.toLowerCase(),
+                birthday, caseNumber.toLowerCase()));
 
         return "patients";
     }
@@ -61,7 +66,8 @@ public class PatientController {
     }
 
     @RequestMapping(value = "/patient", method = RequestMethod.POST)
-    public String addPatient(@ModelAttribute("patient") @Valid Patient patient, BindingResult result, Model model) {
+    public String addPatient(Authentication authentication, @ModelAttribute("patient") @Valid Patient patient,
+                             BindingResult result, Model model) {
         int id = patient.getId();
         model.addAttribute("id", id);
 
@@ -70,10 +76,12 @@ public class PatientController {
         }
 
         if (id == 0) {
-            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             patientService.addWithInitialMedicalCase(patient, userDetails.getUsername());
+            logger.info("New patient with SSN {} was created", patient.getSocialSecurityNumber());
         } else {
             patientService.update(patient);
+            logger.info("Patient with SSN {} was updated", patient.getSocialSecurityNumber());
         }
 
         return "redirect:/patients";
@@ -83,6 +91,7 @@ public class PatientController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void removePatient(@PathVariable("id") int id) {
         patientService.remove(id);
+        logger.info("Patient with id {} was deleted", id);
     }
 
     @RequestMapping(value = "/patient/{id}", method = RequestMethod.GET)

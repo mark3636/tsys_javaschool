@@ -1,8 +1,10 @@
 package ru.tsystems.medicalinstitute.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,17 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.tsystems.medicalinstitute.bo.MedicalStaff;
-import ru.tsystems.medicalinstitute.bo.Role;
 import ru.tsystems.medicalinstitute.service.MedicalStaffService;
 import ru.tsystems.medicalinstitute.service.RoleService;
-
-import javax.validation.Valid;
-import java.util.Collection;
 
 @Controller
 public class LoginController {
     private final MedicalStaffService medicalStaffService;
     private final RoleService roleService;
+
+    private final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     public LoginController(final MedicalStaffService medicalStaffService,
                            final RoleService roleService) {
@@ -45,7 +45,7 @@ public class LoginController {
         model.addAttribute("roleId", "");
 
         if (error != null) {
-            model.addAttribute("error", "User with such email already exists");
+            model.addAttribute("error", error);
         }
 
         return "registration";
@@ -67,6 +67,8 @@ public class LoginController {
             return "registration";
         }
 
+        logger.info("Medical staff with email {} has been registered", medicalStaff.getEmail());
+
         medicalStaff.setRole(roleService.getById(roleId));
         medicalStaffService.add(medicalStaff);
 
@@ -74,10 +76,12 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String homePage() {
-        Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+    public String homePage(Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        for (GrantedAuthority auth : authorities) {
+        logger.info("Medical staff with email {} on homepage", userDetails.getUsername());
+
+        for (GrantedAuthority auth : userDetails.getAuthorities()) {
             if (auth.getAuthority().equals("ROLE_NURSE")) {
                 return "redirect:/medical-procedures";
             }

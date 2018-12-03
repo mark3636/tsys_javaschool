@@ -1,5 +1,8 @@
 package ru.tsystems.medicalinstitute.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -25,6 +28,8 @@ public class MedicalCaseController {
     private final PdfFileService pdfFileService;
     private final DiagnosisService diagnosisService;
     private final MedicalProcedureService medicalProcedureService;
+
+    private final Logger logger = LoggerFactory.getLogger(MedicalCaseController.class);
 
     public MedicalCaseController(final CaseStatusService caseStatusService, final MedicalCaseService medicalCaseService,
                                  final PatientService patientService, final MedicalStaffService medicalStaffService,
@@ -61,6 +66,8 @@ public class MedicalCaseController {
 
         medicalCaseService.add(medicalCase);
 
+        logger.info("New medical case with number {} was created", medicalCase.getNumber());
+
         return "redirect:/patient-details/{patientId}";
     }
 
@@ -93,6 +100,8 @@ public class MedicalCaseController {
         Date endingDate = new Date();
         medicalCase.setEndingDate(endingDate);
         medicalCaseService.update(medicalCase);
+
+        logger.info("Medical case with number {} was updated: set status {}", medicalCase.getNumber(), status);
 
         return endingDate;
     }
@@ -127,17 +136,19 @@ public class MedicalCaseController {
     }
 
     @RequestMapping(value = "/medical-case/{medicalCaseId}/diagnosis", method = RequestMethod.POST)
-    public String addPatient(@PathVariable("medicalCaseId") int medicalCaseId,
+    public String addPatient(Authentication authentication, @PathVariable("medicalCaseId") int medicalCaseId,
                              @ModelAttribute("diagnosis") Diagnosis diagnosis) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         diagnosis.setMedicalStaff(medicalStaffService.findByEmail(userDetails.getUsername()));
         diagnosis.setMedicalCase(medicalCaseService.getById(medicalCaseId));
         diagnosis.setDiagnosisDate(new Date());
 
         if (diagnosis.getId() == 0) {
             diagnosisService.add(diagnosis);
+            logger.info("New diagnosis {} was created", diagnosis.getName());
         } else {
             diagnosisService.update(diagnosis);
+            logger.info("Diagnosis {} was updated", diagnosis.getName());
         }
 
         return "redirect:/medical-case/" + medicalCaseId;
@@ -156,7 +167,10 @@ public class MedicalCaseController {
             pdfFile.setData(file.getBytes());
             pdfFile.setMedicalCase(medicalCaseService.getById(id));
             pdfFileService.add(pdfFile);
-        } catch (IOException ex) {
+            logger.info("File {} was added", pdfFile.getName());
+        } catch (IOException e) {
+            logger.error("Exception while saving file: {}", e.getMessage());
+
             return "redirect:/medical-cases";
         }
 
@@ -166,22 +180,27 @@ public class MedicalCaseController {
     @RequestMapping(value = "medical-case/{caseId}/pdf-file/{id}/delete")
     public String deletePdfFile(@PathVariable("caseId") int caseId, @PathVariable("id") int id) {
         pdfFileService.remove(id);
+        logger.info("File with id {} was deleted", id);
 
         return "redirect:/medical-case/" + caseId;
     }
 
-    @RequestMapping(value = "medical-case/{caseId}/pdf-file/{id}/download")
+    @RequestMapping(value = "medical-case/{caseId}/pdf-file/{id}/download", method = RequestMethod.GET)
     public String downloadPdfFile(@PathVariable("caseId") int caseId, @PathVariable("id") int id,
                                   HttpServletResponse response) {
         PdfFile pdfFile = pdfFileService.getById(id);
+
         try {
             response.setHeader("Content-Disposition", "attachment; filename=\"" + pdfFile.getName() + "\"");
             response.setContentLength(pdfFile.getData().length);
             FileCopyUtils.copy(pdfFile.getData(), response.getOutputStream());
-
         } catch (IOException e) {
+            logger.error("Exception while loading file {}: {}", pdfFile.getName(), e.getMessage());
+
             return "redirect:/medical-case/" + caseId;
         }
+
+        logger.info("File {} was downloaded", pdfFile.getName());
 
         return "redirect:/medical-case/" + caseId;
     }
