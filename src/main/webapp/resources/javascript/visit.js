@@ -114,9 +114,6 @@ $.validator.addMethod(
         var  dt = $("#visitDate").val();
         var date = Date.parse(dt);
         var dateWithTime = Date.parse(dt + " " + value);
-        console.log("now: " + now);
-        console.log("date: " + date);
-        console.log("date with time: " + dateWithTime);
         return this.optional(element) || date > now || dateWithTime > now
     },
     "Please check your input."

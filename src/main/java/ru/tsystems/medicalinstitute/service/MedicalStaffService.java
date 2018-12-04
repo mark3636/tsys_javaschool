@@ -19,5 +19,10 @@ public interface MedicalStaffService extends AbstractService<MedicalStaff>, User
      */
     MedicalStaff findByEmail(String email);
 
+    /**
+     * Returns medical staff by their position
+     * @param position position
+     * @return List of medical staff
+     */
     List<MedicalStaff> getByPosition(String position);
 }

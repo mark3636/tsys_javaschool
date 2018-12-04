@@ -24,6 +24,8 @@ public class VisitServiceImpl implements VisitService {
     private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+    private static final String MAX_TIME = "16:00";
+
     public VisitServiceImpl(final VisitDAO visitDAO) {
         this.visitDAO = visitDAO;
     }
@@ -83,8 +85,8 @@ public class VisitServiceImpl implements VisitService {
             }
         }
 
-        if (maxTime.after(timeFormat.parse("16:00"))) {
-            maxTime = timeFormat.parse("16:00");
+        if (maxTime.after(timeFormat.parse(MAX_TIME))) {
+            maxTime = timeFormat.parse(MAX_TIME);
         }
 
         timeBorder.add(timeFormat.format(minTime));
